@@ -158,7 +158,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(160%) blur(14px);
   border-bottom:1px solid transparent;transition:box-shadow var(--t),border-color var(--t)}
 .nav.stick{box-shadow:var(--shadow-xs);border-color:var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100%;gap:var(--s-4)}
+/* NAV LAW (Thulaib standing rule): brand hard left, primary CTA hard right,
+   the bar spans the full viewport, never centred into the content column */
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100%;gap:var(--s-4);max-width:none}
 .brand{display:flex;align-items:center;gap:11px;flex:none}
 .brand .bm{width:38px;height:38px;border-radius:9px;background:var(--brand-ink);color:#c8a878;
   display:grid;place-items:center;font-family:var(--font-display);font-size:17px;font-weight:600;flex:none}
@@ -299,6 +301,22 @@ body.dev .ph-cap{display:inline-block}
   font-size:var(--fs-sm);font-weight:500;background:var(--surface);transition:all var(--t-fast) var(--ease)}
 .chip:hover{border-color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--brand-ink);color:#f4efe4;border-color:var(--brand-ink)}
+.bk-label{display:block;font-size:var(--fs-2xs);font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--brand);margin-bottom:var(--s-3)}
+.bk-step{margin-bottom:var(--s-8)}
+.date-strip{display:flex;gap:var(--s-2);overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.date-opt{flex:none;min-width:66px;min-height:66px;border:1px solid var(--line-2);border-radius:var(--r-sm);
+  background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  transition:all var(--t-fast) var(--ease)}
+.date-opt:hover{border-color:var(--ink)}
+.date-opt .day{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.date-opt .num{font-family:var(--font-display);font-weight:600;font-size:var(--fs-md);line-height:1;color:var(--ink)}
+.date-opt[aria-pressed="true"]{background:var(--brand-ink);border-color:var(--brand-ink)}
+.date-opt[aria-pressed="true"] .day{color:#c8a878}
+.date-opt[aria-pressed="true"] .num{color:#f4efe4}
+.bk-summary{background:var(--brand-soft);border-left:3px solid var(--brand);padding:var(--s-4) var(--s-5);
+  font-size:var(--fs-sm);color:var(--ink);margin-top:var(--s-2)}
+.bk-summary b{color:var(--brand-dark)}
 .form-note{border-radius:var(--r-sm);padding:var(--s-4) var(--s-5);font-size:var(--fs-sm);display:none;margin-top:var(--s-5)}
 .form-note.show{display:block}
 .form-note.ok{background:var(--green-soft);border:1px solid var(--green);color:var(--green)}
@@ -635,29 +653,54 @@ html.nojs .needs-js{display:none}
     </div>
     <div class="tool-card" data-sr>
       <div class="needs-js">
-        <div class="f-grid">
-          <div class="field" style="grid-column:1/-1">
-            <label id="bkSvcLbl">What are you coming in for?</label>
-            <div class="chips" role="group" aria-labelledby="bkSvcLbl" id="bkSvc">
-              <button type="button" class="chip" data-v="Hair">Hair</button>
-              <button type="button" class="chip" data-v="Nails">Nails</button>
-              <button type="button" class="chip" data-v="Skin">Skin</button>
-              <button type="button" class="chip" data-v="Not sure yet">Not sure yet</button>
-            </div>
-          </div>
-          <div class="field">
-            <label for="bkWho">Anyone you would like to book with? <span class="hint">Optional</span></label>
-            <input id="bkWho" type="text" autocomplete="off" placeholder="A name, if you know one">
-          </div>
-          <div class="field">
-            <label for="bkWhen">A day or time that suits you <span class="hint">Optional</span></label>
-            <input id="bkWhen" type="text" autocomplete="off" placeholder="For example Saturday morning">
+        <div class="bk-step">
+          <span class="bk-label" id="bkSvcLbl">01 · What are you coming in for?</span>
+          <div class="chips" role="group" aria-labelledby="bkSvcLbl" id="bkSvc">
+            <button type="button" class="chip" data-v="Hair">Hair</button>
+            <button type="button" class="chip" data-v="Nails">Nails</button>
+            <button type="button" class="chip" data-v="Skin">Skin</button>
+            <button type="button" class="chip" data-v="Not sure yet">Not sure yet</button>
           </div>
         </div>
+        <div class="bk-step">
+          <span class="bk-label" id="bkDayLbl">02 · Which day?</span>
+          <div class="date-strip" role="group" aria-labelledby="bkDayLbl" id="bkDays"></div>
+        </div>
+        <div class="bk-step">
+          <span class="bk-label" id="bkTimeLbl">03 · What time of day?</span>
+          <div class="chips" role="group" aria-labelledby="bkTimeLbl" id="bkTime">
+            <button type="button" class="chip" data-v="Morning, 10 to 12">Morning</button>
+            <button type="button" class="chip" data-v="Midday, 12 to 3">Midday</button>
+            <button type="button" class="chip" data-v="Afternoon, 3 to 6">Afternoon</button>
+            <button type="button" class="chip" data-v="Evening, 6 to 8">Evening</button>
+          </div>
+        </div>
+        <div class="bk-step">
+          <span class="bk-label">04 · Your details</span>
+          <div class="f-grid">
+            <div class="field">
+              <label for="bkName">Your name</label>
+              <input id="bkName" type="text" autocomplete="name" placeholder="So the desk knows who is coming">
+            </div>
+            <div class="field">
+              <label for="bkPhone">Your number</label>
+              <input id="bkPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="07X XXX XXXX">
+            </div>
+            <div class="field">
+              <label for="bkEmail">Email <span class="hint">Optional</span></label>
+              <input id="bkEmail" type="email" autocomplete="email" placeholder="If you prefer a written confirmation">
+            </div>
+            <div class="field">
+              <label for="bkWho">Anyone you would like to book with? <span class="hint">Optional</span></label>
+              <input id="bkWho" type="text" autocomplete="off" placeholder="A name, if you know one">
+            </div>
+          </div>
+        </div>
+        <p class="bk-summary" id="bkSummary" hidden></p>
         <button class="btn btn-primary btn-lg" style="margin-top:var(--s-6)" type="button" onclick="sendBooking(this)">Book on WhatsApp</button>
         <p class="form-note" data-note></p>
         <div class="wa-preview" data-preview></div>
-        <p class="tool-note">A time is confirmed once the desk replies.</p>
+        <p class="tool-note">This is a request, not a hold on the diary. The exact time is confirmed once the desk replies.</p>
       </div>
       <p class="nojs-note">This form needs JavaScript. WhatsApp or call the salon on <a href="tel:+94770754224">+94 77 075 4224</a> with what you need.</p>
     </div>
@@ -761,6 +804,10 @@ html.nojs .needs-js{display:none}
     <div class="tool-card" data-sr>
       <div class="needs-js">
         <div class="f-grid">
+          <div class="field">
+            <label for="brName">Your name</label>
+            <input id="brName" type="text" autocomplete="name" placeholder="The bride, or whoever is planning">
+          </div>
           <div class="field">
             <label for="brDate">The wedding date</label>
             <input id="brDate" type="date">
@@ -1102,8 +1149,41 @@ function chipGroup(id, onPick){
   });
   return () => { const on = host.querySelector('[aria-pressed="true"]'); return on ? on.dataset.v : null; };
 }
-const getBkSvc = chipGroup('bkSvc');
+const getBkTime = chipGroup('bkTime', updateBkSummary);
+const getBkSvc = chipGroup('bkSvc', updateBkSummary);
 const getLvFly = chipGroup('lvFly');
+
+/* 02 - the seven-day strip. Day chips are a PREFERENCE, never availability:
+   with no diary connected, a slot shown as free would be an invented fact
+   (the old demos faked a Booked legend; deliberately not taken). */
+let BK_DAY = null;
+(function(){
+  const host = document.getElementById('bkDays');
+  if (!host) return;
+  const dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(); d.setDate(d.getDate() + i);
+    const label = i === 0 ? 'Today' : i === 1 ? 'Tmrw' : dow[d.getDay()];
+    const value = (i === 0 ? 'Today, ' : i === 1 ? 'Tomorrow, ' : '') + dow[d.getDay()] + ' ' + d.getDate() + ' ' + mon[d.getMonth()];
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'date-opt'; b.dataset.v = value;
+    b.innerHTML = '<span class="day">' + label + '</span><span class="num">' + d.getDate() + '</span>';
+    b.onclick = () => {
+      host.querySelectorAll('.date-opt').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      BK_DAY = value; updateBkSummary();
+    };
+    host.appendChild(b);
+  }
+})();
+function updateBkSummary(){
+  const s = document.getElementById('bkSummary');
+  if (!s) return;
+  const svc = getBkSvc(), t = getBkTime();
+  const bits = [svc, BK_DAY, t ? t.split(',')[0].toLowerCase() : null].filter(Boolean);
+  s.hidden = !bits.length;
+  s.innerHTML = '<b>Your request:</b> ' + bits.join(' · ') + '. The desk confirms the exact time.';
+}
 const getBrRoute = chipGroup('brRoute', v => {
   document.getElementById('brPhoneWrap').hidden = v !== 'Call me';
 });
@@ -1112,12 +1192,24 @@ function prefillBooking(svc){
   document.getElementById('book').scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' });
   const host = document.getElementById('bkSvc');
   host.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === svc)));
+  updateBkSummary();
 }
 function sendBooking(btn){
-  const lines = [];
+  const note = nearNote(btn, '[data-note]');
+  const name = document.getElementById('bkName').value.trim();
+  const phone = document.getElementById('bkPhone').value.trim();
+  if (!name || !phone) {
+    note.className = 'form-note warn show';
+    note.textContent = 'The desk needs a name and a number to hold the request. Email is optional.';
+    (name ? document.getElementById('bkPhone') : document.getElementById('bkName')).focus();
+    return;
+  }
+  const lines = ['Name: ' + name, 'Number: ' + phone];
+  const email = document.getElementById('bkEmail').value.trim(); if (email) lines.push('Email: ' + email);
   const svc = getBkSvc(); if (svc) lines.push('Service: ' + svc);
+  if (BK_DAY) lines.push('Day: ' + BK_DAY);
+  const t = getBkTime(); if (t) lines.push('Time of day: ' + t);
   const who = document.getElementById('bkWho').value.trim(); if (who) lines.push('With: ' + who);
-  const when = document.getElementById('bkWhen').value.trim(); if (when) lines.push('When suits: ' + when);
   waSend('Salon', 'Book a chair', lines, btn);
 }
 function sendLeaving(btn){
@@ -1131,9 +1223,10 @@ function sendLeaving(btn){
 }
 function sendBridal(btn){
   const note = nearNote(btn, '[data-note]');
+  const nm = document.getElementById('brName').value.trim();
   const d = document.getElementById('brDate').value;
-  if (!d) { note.className='form-note warn show'; note.textContent='The date is the one thing the salon needs first.'; return; }
-  const lines = ['Wedding date: ' + d];
+  if (!nm || !d) { note.className='form-note warn show'; note.textContent='A name and the date are the two things the salon needs first.'; (nm?document.getElementById('brDate'):document.getElementById('brName')).focus(); return; }
+  const lines = ['Name: ' + nm, 'Wedding date: ' + d];
   const p = document.getElementById('brParty').value; if (p) lines.push('Party of: ' + p);
   const c = document.getElementById('brCeremony').value.trim(); if (c) lines.push('Ceremony at: ' + c);
   const g = document.getElementById('brPrep').value.trim(); if (g) lines.push('Getting ready at: ' + g);

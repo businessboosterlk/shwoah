@@ -13,7 +13,7 @@ Status key: OPEN (nothing supplied) · PARTIAL · CLEARED.
 | 2 | Prices and durations for the salon menu, in writing | Harini | Price surface in salon mode | OPEN |
 | 3 | Bridal packages: names, what each covers, prices | Harini | Bridal packages surface | OPEN |
 | 4 | Team roster: names, roles, photos, who may be asked for by name | Harini | Team section (not yet rendered), ask-for-a-person confidence | OPEN |
-| 5 | Review subset: author, text, language, date, service line, source URL | BB pulls by hand from the Google listing, Harini confirms | Review wall (fallback block shows meanwhile) | OPEN |
+| 5 | Review subset: author, text, language, date, service line, source URL | BB pulls by hand from the Google listing, Harini confirms | Review wall | PARTIAL: 3 live, see below |
 | 6 | Photography: salon interior, treatments, bridal portfolio, product, staff | Harini, or a BB shoot | The mosaic tiles and every mode's visual surface | PARTIAL |
 | 7 | Logo files and variants, brand colours, fonts with licences | Harini | Wordmark, favicon (interim monogram ships flagged), og image (interim typographic ships flagged) | OPEN |
 | 8 | Exact business name and capitalisation (site shows sh-WOAH and Sh-Woah today) | Harini | Title, structured data, footer | OPEN |
@@ -49,6 +49,47 @@ Eleven images arrived from Thulaib (`assets/src/IMG_8123.jpg` to `IMG_8133.jpg`,
 **Still wanted:** full-resolution originals of all of the above (screenshots cap
 the quality), one true product shot for the concept tile, a confirmed bridal
 set and staff portraits for the team section.
+
+## Reviews on the site (item 5), added 26 August 2026
+
+Three reviews are live, read off the salon's own published Google reviews widget:
+Moritz Hartkopf (German), Beth (English) and Laurina de Vries (Dutch), all five
+stars, all about six months old.
+
+**The rule applied, and it is the one to keep:** the widget truncates longer
+reviews with a "Read more" link, so **only complete sentences were taken**. A
+half sentence is never published as a whole one. Originals always ship beside
+the translation and the translation is labelled as one. The page says "3 of the
+128" and links to Google, so it never implies the whole set is on the site.
+
+**Wanted from Harini or a hand pull:** the full text of the truncated reviews,
+plus any review that names a staff member (the report found staff named by name,
+and none of the three above does, so the ask-for-a-person surface still has no
+evidence behind it). Bridal reviews are wanted most: all three here are salon.
+
+**Not marked up in schema deliberately.** Review and aggregateRating schema needs
+an exact average, which no source gives. The visible "Excellent" and "128" come
+from the salon's own widget, so they are quoted, not computed.
+
+## Photography record v2, received 26 August 2026
+
+A second, better set of 12 arrived (`assets/src-v2/`, kept out of git). **Nine
+are upscaled versions of the original phone photos** and match them room for
+room, so they replaced the v1 crops: exterior, salon floor, nail bar, manicure
+bar, pedicure lounge, lash work, nail result, hair result and the client with
+her nails.
+
+**Three were NOT used and must not be.** They are AI-generated images of places
+that are not sh-WOAH: a hair salon with brass sconces and dark marble (the real
+salon is cream tile, black metal ceiling, tan chairs), a bridal getting-ready
+scene in a colonial room, and a still life of a pot on a brass shelf. Publishing
+any of them would show a customer a salon that does not exist, which is exactly
+the fabrication the whole build is built to avoid. Filenames held in
+`assets/src-v2/`: `exec-58f55d36`, `exec-9914bc59`, `exec-94db5480`.
+
+**Bridal still has no photography and its tiles carry no image.** Every supplied
+photo is salon work. A manicure under a "Bridal" label claims a portfolio nobody
+has supplied, so the bridal tiles stay designed until real bridal work arrives.
 
 ## Rules this file enforces
 

@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const PORT = 9223;
-const BASE = 'http://localhost:4641/';
+const BASE = 'https://businessboosterlk.github.io/shwoah/';
 const OUT = new URL('./shots/', import.meta.url).pathname;
 mkdirSync(OUT, { recursive: true });
 
