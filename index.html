@@ -1,0 +1,1199 @@
+<!doctype html>
+<html lang="en" class="nojs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+===============================================================================
+  sh-WOAH BEAUTE HOUSE - one site, three doors (salon / bridal / concept store)
+  Business Booster - cast from the hotel frozen master (chassis only), 2026-08-26
+===============================================================================
+
+  ARCHITECTURE
+  One page, three modes. The address bar carries the door (?service=salon|bridal|
+  concept). No param = the overview. Mode restores on load. Every enquiry route
+  opens WhatsApp with a readable source tag: [Source | Door | CTA | Campaign].
+
+  CONTENT GATES (see CONTENT-REQUIRED.md - production never shows a gap)
+  - CFG.wa is EMPTY until Harini confirms the WhatsApp line. All enquiry
+    controls show an honest fallback (call / email) plus, in dev, the exact
+    message they will send.
+  - PRICES, REVIEWS, TEAM and CONCEPT.products are empty arrays. Production
+    renders honest neutral copy or hides the surface. Dev mode
+    (?preview=dev) renders marked placeholders so composition can be judged.
+  - jac / concept store range stays behind the dev flag. Public concept mode
+    is a teaser with an enquiry route only.
+
+  DELIBERATE DEPARTURES FROM THE MASTER, with reasons
+  - .eyebrow::before decorative dash REMOVED (bb-anti-ai-tells rule 1).
+  - Single-brochure page order replaced by the three-mode architecture.
+  - GSAP kept for the hero intro only; section reveals are a small
+    IntersectionObserver so mode switching cannot strand ScrollTrigger state.
+  - Gallery + lightbox omitted: no photography is confirmed yet.
+
+  PORTED VERBATIM FROM THE MASTER (proven blocks)
+  - Reset, token skeleton, bone-paper neutral block, drawer + scrim + focus
+    trap + scroll lock, form-note, FAQ, footer shape, stickbar, motion gate.
+===============================================================================
+-->
+<title>sh-WOAH Beaute House | Salon, Bridal and Concept Store in Negombo</title>
+<meta name="description" content="Skin, hair, nails, bridal and a concept store in Negombo. Rated excellent across 128 Google reviews. Ask us anything on WhatsApp.">
+<link rel="canonical" href="https://shwoah.com/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="sh-WOAH Beaute House">
+<meta property="og:description" content="Skin, hair, nails, bridal and a concept store in Negombo.">
+<meta property="og:url" content="https://shwoah.com/">
+<meta property="og:image" content="https://shwoah.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#221d16">
+<!-- INTERIM favicon: typographic monogram, flagged in CONTENT-REQUIRED.md until real logo files arrive -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23221d16'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23c8a878' text-anchor='middle'%3EsW%3C/text%3E%3C/svg%3E">
+<!-- GSC verification slot: fill at launch, per bb-web-seo-foundation -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BeautySalon","@id":"https://shwoah.com/#org","name":"sh-WOAH Beaute House",
+  "url":"https://shwoah.com/",
+  "image":"https://shwoah.com/assets/og.png",
+  "telephone":"+94770754224","email":"inquiries@shwoah.com",
+  "address":{"@type":"PostalAddress","streetAddress":"Banyan Complex, Heritance","addressLocality":"Negombo","addressCountry":"LK"},
+  "openingHours":"Mo-Su 10:00-20:00",
+  "sameAs":["https://www.instagram.com/shwoah.beaute","https://www.facebook.com/shwoahbeaute","https://www.tiktok.com/@shwoah.beaute"]},
+ {"@type":"WebSite","@id":"https://shwoah.com/#website","url":"https://shwoah.com/","name":"sh-WOAH","publisher":{"@id":"https://shwoah.com/#org"}},
+ {"@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"When are you open?","acceptedAnswer":{"@type":"Answer","text":"Daily, 10:00 to 20:00."}},
+  {"@type":"Question","name":"Where exactly are you?","acceptedAnswer":{"@type":"Answer","text":"Banyan Complex, Heritance, Negombo. The map link below takes you to the door."}},
+  {"@type":"Question","name":"How do I book?","acceptedAnswer":{"@type":"Answer","text":"Message us on WhatsApp or call. A time is confirmed once the desk replies."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  /* ======= BRAND - sh-WOAH, Direction A: daylight editorial ======= */
+  --brand:#8a6a3f;            /* matte bronze, lifted from the logo badge tone */
+  --brand-dark:#6f5430;
+  --brand-deep:#57411f;
+  --brand-soft:#f0e7d6;
+  --brand-ink:#221d16;        /* espresso */
+  --brand-glow:rgba(138,106,63,.26);
+  --font-display:'Fraunces',Georgia,serif;
+  --font-sans:'Inter',system-ui,sans-serif;
+
+  /* ======= NEUTRALS - bone paper (ported from the master) ======= */
+  --bg:#f6f3ec; --surface:#fffefb; --surface-2:#efe9dc;
+  --ink:#211d16; --muted:#5f584c; --faint:#8a8375;
+  --line:#e6dfd0; --line-2:#d8cfbc; --hair:rgba(33,29,22,.12);
+
+  --green:#4a7c3f; --green-soft:#e8f0e2;
+  --amber:#a1720f; --amber-soft:#f7eed7;
+  --danger:#c0473a; --danger-soft:#f8e8e5;
+
+  --shadow-xs:0 1px 2px rgba(33,25,10,.05),0 1px 1px rgba(33,25,10,.04);
+  --shadow:0 2px 6px rgba(33,25,10,.06),0 6px 16px rgba(33,25,10,.06);
+  --shadow-md:0 6px 14px rgba(33,25,10,.08),0 14px 34px rgba(33,25,10,.10);
+  --shadow-lg:0 18px 40px rgba(33,25,10,.14),0 30px 70px rgba(33,25,10,.12);
+  --ring:0 0 0 3px var(--brand-glow);
+
+  --radius:14px; --r-md:10px; --r-sm:8px; --r-lg:20px; --r-pill:999px;
+  --fs-2xs:11px; --fs-xs:12.5px; --fs-sm:13.5px; --fs-base:15px;
+  --fs-md:19px; --fs-lg:25px; --fs-xl:32px; --fs-2xl:42px;
+  --fs-3xl:clamp(34px,5vw,50px); --fs-4xl:clamp(44px,6.5vw,66px);
+  --fs-hero:clamp(40px,7.4vw,88px);
+  --lh-tight:1.04; --lh-snug:1.2; --lh:1.62;
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px;
+  --s-8:32px; --s-10:40px; --s-12:48px; --s-16:64px; --s-20:80px; --s-24:96px;
+
+  --ease:cubic-bezier(.16,1,.3,1); --t-fast:.15s; --t:.25s; --t-slow:.4s;
+  --maxw:1200px; --gutter:clamp(20px,5vw,44px); --nav-h:74px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font-sans);font-size:var(--fs-base);line-height:var(--lh);
+  color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:var(--lh-tight);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+svg{flex-shrink:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
+::selection{background:var(--brand);color:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+.section{padding:var(--s-20) 0}
+@media(max-width:700px){.section{padding:var(--s-16) 0}}
+.skip{position:absolute;left:-9999px;top:0;background:var(--brand-ink);color:#f4efe4;padding:12px 20px;z-index:400;border-radius:0 0 var(--r-sm) 0}
+.skip:focus{left:0}
+
+.scene-dark{background:var(--brand-ink);
+  --ink:#f4efe4; --muted:#c2b9a8; --faint:#968d7c;
+  --line:rgba(244,239,228,.14); --line-2:rgba(244,239,228,.24); --hair:rgba(244,239,228,.16);
+  --surface:#2a241b; --surface-2:#322b21;
+  color:var(--ink)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);
+  font-family:var(--font-sans);font-weight:500;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;
+  padding:15px 26px;border-radius:var(--r-sm);white-space:nowrap;min-height:46px;
+  transition:transform var(--t-fast) var(--ease),box-shadow var(--t) var(--ease),filter var(--t-fast),background var(--t)}
+.btn svg{width:16px;height:16px}
+.btn:active{transform:scale(.98)}
+.btn-primary{color:#fff;background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 86%,#fff),var(--brand) 55%,var(--brand-dark));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 6px 18px var(--brand-glow)}
+.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn-ghost{color:var(--ink);background:transparent;border:1px solid var(--line-2)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-lg{padding:17px 32px;font-size:var(--fs-sm)}
+
+.eyebrow{display:block;font-family:var(--font-sans);font-weight:500;font-size:var(--fs-xs);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--brand)}
+.scene-dark .eyebrow{color:#c8a878}
+.sect-head{max-width:720px;margin-bottom:var(--s-10)}
+.sect-head h2{font-size:var(--fs-3xl);margin:var(--s-4) 0 var(--s-3)}
+.sect-head p{color:var(--muted);font-size:var(--fs-md)}
+.tag-lbl{font-family:var(--font-sans);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+.nav{position:sticky;top:0;z-index:100;height:var(--nav-h);
+  background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid transparent;transition:box-shadow var(--t),border-color var(--t)}
+.nav.stick{box-shadow:var(--shadow-xs);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100%;gap:var(--s-4)}
+.brand{display:flex;align-items:center;gap:11px;flex:none}
+.brand .bm{width:38px;height:38px;border-radius:9px;background:var(--brand-ink);color:#c8a878;
+  display:grid;place-items:center;font-family:var(--font-display);font-size:17px;font-weight:600;flex:none}
+.brand .bt{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1}
+.brand .bt small{display:block;font-family:var(--font-sans);font-weight:500;font-size:9px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:3px}
+.nav-links{display:flex;gap:var(--s-6)}
+.nav-links button,.nav-links a{font-weight:500;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);transition:color var(--t-fast);padding:12px 2px;min-height:44px}
+.nav-links button:hover,.nav-links a:hover{color:var(--ink)}
+.nav-links button[aria-pressed="true"]{color:var(--brand)}
+.hamb{display:none;width:44px;height:44px;align-items:center;justify-content:center;color:var(--ink)}
+.hamb svg{width:26px;height:26px}
+@media(max-width:960px){.nav-links,.nav .wrap>.btn{display:none}.hamb{display:flex}}
+.drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,340px);z-index:200;background:var(--surface);
+  padding:var(--s-8) var(--s-6);box-shadow:var(--shadow-lg);
+  visibility:hidden;transform:translateX(100%);
+  display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  transition:transform var(--t) var(--ease),visibility 0s linear var(--t)}
+.drawer.open{visibility:visible;transform:translateX(0);transition:transform var(--t) var(--ease),visibility 0s}
+.drawer button.dlink,.drawer a.dlink{display:block;width:100%;text-align:left;padding:15px 0;
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-lg);border-bottom:1px solid var(--line)}
+.drawer .btn{margin-top:var(--s-6);width:100%}
+.scrim{position:fixed;inset:0;z-index:199;background:rgba(14,12,8,.5);opacity:0;visibility:hidden;transition:opacity var(--t)}
+.scrim.open{opacity:1;visibility:visible}
+body.drawer-lock{position:fixed;width:100%;overflow:hidden}
+
+.devbar{background:var(--amber-soft);border-bottom:1px solid var(--amber);color:var(--amber);
+  font-size:var(--fs-sm);text-align:center;padding:10px var(--s-4)}
+.ph-cap{display:none;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);
+  background:var(--amber-soft);border:1px dashed var(--amber);border-radius:var(--r-sm);padding:4px 8px}
+body.dev .ph-cap{display:inline-block}
+
+/* ======= FIRST SCREEN ======= */
+.door-hero{padding:calc(var(--s-10)) 0 var(--s-16)}
+.door-hero .idline{text-align:center;margin-bottom:var(--s-4);font-size:var(--fs-xs);
+  font-weight:500;letter-spacing:.2em;color:var(--faint);text-transform:none}
+.door-hero h1{font-size:var(--fs-hero);text-align:center;max-width:14ch;margin:0 auto}
+.door-hero .sub{max-width:52ch;margin:var(--s-5) auto var(--s-10);color:var(--muted);font-size:var(--fs-md);text-align:center}
+.mosaic{display:grid;gap:10px;grid-template-columns:1.05fr .95fr 1fr .95fr 1.05fr;
+  grid-template-areas:"s1 s1 c b1 b1" "s1 s1 c b2 b2" "s2 s2 c b2 b2";
+  grid-auto-rows:minmax(96px,15vh)}
+.tile{position:relative;border:0;border-radius:var(--r-md);overflow:hidden;text-align:left;
+  padding:var(--s-5);display:flex;flex-direction:column;justify-content:flex-end;gap:6px;
+  background:var(--surface-2);transition:transform var(--t) var(--ease),box-shadow var(--t)}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.tile:focus-visible{outline:2px solid var(--brand);outline-offset:3px;box-shadow:none}
+.tile[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--brand)}
+.tile .t-door{font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.tile .t-line{font-family:var(--font-display);font-weight:600;font-size:clamp(19px,2vw,26px);line-height:1.15;color:var(--ink)}
+.tile .t-ico{position:absolute;top:var(--s-5);left:var(--s-5);width:26px;height:26px;color:var(--brand)}
+.tile-s1{grid-area:s1;background:linear-gradient(165deg,var(--brand-soft),var(--surface-2) 80%)}
+.tile-s2{grid-area:s2;background:var(--surface)}
+.tile-c{grid-area:c;background:var(--brand-ink)}
+.tile-c .t-door{color:#968d7c}
+.tile-c .t-line{color:#f4efe4}
+.tile-c .t-ico{color:#c8a878}
+.tile-b1{grid-area:b1;background:var(--surface)}
+.tile-b2{grid-area:b2;background:linear-gradient(150deg,#efe6da,var(--brand-soft) 85%)}
+.mosaic .ph-cap{position:absolute;top:var(--s-5);right:var(--s-5);z-index:2}
+.tile-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.tile-photo::after{content:"";position:absolute;inset:44% 0 0 0;z-index:1;
+  background:linear-gradient(180deg,transparent,rgba(22,16,9,.74))}
+.tile-photo .t-door,.tile-photo .t-line,.tile-photo .t-ico{position:relative;z-index:2}
+.tile-photo .t-door{color:#e6dcc6}
+.tile-photo .t-line{color:#fdfaf2}
+.tile-photo .t-ico{color:#e6d3ae}
+.house-shot{border-radius:var(--r-lg);overflow:hidden;margin-bottom:var(--s-12)}
+.house-shot img{width:100%;height:auto}
+.house-shot figcaption{padding:var(--s-3) 0 0;color:var(--faint);font-size:var(--fs-xs)}
+.map-embed{border:0;width:100%;height:320px;border-radius:var(--r-md);display:block;background:var(--surface-2)}
+.tools-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden;max-width:760px}
+.tool-row{display:flex;width:100%;align-items:center;gap:var(--s-5);padding:var(--s-5) var(--s-6);
+  border-top:1px solid var(--line);min-height:64px;text-align:left;transition:background var(--t-fast)}
+.tool-row:first-child{border-top:0}
+.tool-row:hover{background:var(--brand-soft)}
+.tool-row svg{width:22px;height:22px;color:var(--brand)}
+.tool-row .tr-name{font-family:var(--font-display);font-weight:600;font-size:var(--fs-md)}
+.tool-row .tr-sub{color:var(--muted);font-size:var(--fs-xs);margin-top:2px}
+.tool-row .tr-arr{margin-left:auto;color:var(--faint)}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s-12);align-items:start}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+.about-facts{display:grid;gap:var(--s-4)}
+.about-facts .af{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:var(--s-5) var(--s-6)}
+.about-facts .af b{display:block;font-family:var(--font-display);font-weight:600;font-size:var(--fs-md);margin-bottom:4px}
+.about-facts .af span{color:var(--muted);font-size:var(--fs-sm)}
+.notsure{text-align:center;margin-top:var(--s-8)}
+.notsure button{font-size:var(--fs-sm);color:var(--muted);text-decoration:underline;
+  text-underline-offset:4px;padding:12px 16px;min-height:44px}
+.notsure button:hover{color:var(--ink)}
+@media(max-width:720px){
+  .mosaic{grid-template-columns:1fr 1fr;grid-auto-rows:minmax(120px,18vh);
+    grid-template-areas:"s1 s1" "c b2"}
+  .tile-s2,.tile-b1{display:none}
+}
+
+/* ======= line cards (overview) ======= */
+.lines{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:var(--s-4)}
+@media(max-width:820px){.lines{grid-template-columns:1fr}}
+.line-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:var(--s-8);text-align:left;display:flex;flex-direction:column;gap:var(--s-3);
+  transition:transform var(--t) var(--ease),box-shadow var(--t)}
+.line-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.line-card h3{font-size:var(--fs-lg)}
+.line-card p{color:var(--muted);font-size:var(--fs-sm)}
+.line-card .go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;color:var(--brand);
+  font-weight:500;font-size:var(--fs-xs);letter-spacing:.12em;text-transform:uppercase}
+.line-card .go svg{width:16px;height:16px}
+
+/* ======= services / cards ======= */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4)}
+@media(max-width:820px){.svc{grid-template-columns:1fr}}
+.svc-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:var(--s-8);
+  display:flex;flex-direction:column;gap:var(--s-3)}
+.svc-card svg{width:26px;height:26px;color:var(--brand)}
+.svc-card h3{font-size:var(--fs-lg)}
+.svc-card button{align-self:flex-start;margin-top:auto}
+
+/* ======= forms ======= */
+.tool-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-md);padding:var(--s-10);max-width:760px}
+@media(max-width:700px){.tool-card{padding:var(--s-6)}}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)}
+@media(max-width:640px){.f-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:var(--fs-sm);font-weight:500;color:var(--ink)}
+.field .hint{font-size:var(--fs-xs);color:var(--faint)}
+.field input,.field select{font-family:var(--font-sans);font-size:16px;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r-sm);
+  padding:13px 14px;min-height:48px;width:100%}
+.field input:focus-visible,.field select:focus-visible{outline:none;border-color:var(--brand);box-shadow:var(--ring)}
+.chips{display:flex;gap:var(--s-2);flex-wrap:wrap}
+.chip{border:1px solid var(--line-2);border-radius:var(--r-pill);padding:11px 20px;min-height:44px;
+  font-size:var(--fs-sm);font-weight:500;background:var(--surface);transition:all var(--t-fast) var(--ease)}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--brand-ink);color:#f4efe4;border-color:var(--brand-ink)}
+.form-note{border-radius:var(--r-sm);padding:var(--s-4) var(--s-5);font-size:var(--fs-sm);display:none;margin-top:var(--s-5)}
+.form-note.show{display:block}
+.form-note.ok{background:var(--green-soft);border:1px solid var(--green);color:var(--green)}
+.form-note.warn{background:var(--amber-soft);border:1px solid var(--amber);color:var(--amber)}
+.wa-preview{display:none;margin-top:var(--s-4);background:var(--surface-2);border:1px dashed var(--line-2);
+  border-radius:var(--r-sm);padding:var(--s-4);font-size:var(--fs-sm);color:var(--muted);white-space:pre-wrap;word-break:break-word}
+.wa-preview.show{display:block}
+.tool-note{margin-top:var(--s-4);color:var(--faint);font-size:var(--fs-xs)}
+.nojs-note{color:var(--muted);font-size:var(--fs-sm)}
+html.js .nojs-note{display:none}
+html.nojs .needs-js{display:none}
+
+/* ======= reviews ======= */
+.rev-fallback{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:var(--s-10);display:flex;flex-direction:column;gap:var(--s-4);max-width:760px}
+.rev-fallback .big{font-family:var(--font-display);font-weight:600;font-size:var(--fs-2xl);line-height:1.1}
+@media(max-width:700px){.rev-fallback{padding:var(--s-6)}.rev-fallback .big{font-size:var(--fs-lg)}}
+.rev-fallback .big i{font-style:normal;color:var(--brand)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4)}
+@media(max-width:820px){.rev-grid{grid-template-columns:1fr}}
+.rev-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:var(--s-6);
+  display:flex;flex-direction:column;gap:var(--s-3);font-size:var(--fs-sm)}
+.rev-card .r-meta{display:flex;justify-content:space-between;gap:var(--s-3);color:var(--faint);font-size:var(--fs-xs)}
+.rev-card .r-text{color:var(--ink)}
+.rev-card .r-orig{color:var(--faint);font-style:italic}
+.rev-filters{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-6)}
+
+/* ======= price surface ======= */
+.price-wrap{max-width:760px}
+.price-neutral{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:var(--s-8);display:flex;flex-direction:column;gap:var(--s-4);align-items:flex-start}
+.price-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+.price-table th{text-align:left;font-weight:500;color:var(--faint);font-size:var(--fs-xs);
+  letter-spacing:.1em;text-transform:uppercase;padding:10px 12px;border-bottom:1px solid var(--line-2)}
+.price-table td{padding:12px;border-bottom:1px solid var(--line)}
+.price-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ======= steps ======= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:var(--s-8);position:relative}
+.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-lg);color:var(--brand);display:block;margin-bottom:var(--s-3)}
+.step h3{font-size:var(--fs-md);margin-bottom:var(--s-2)}
+.step p{color:var(--muted);font-size:var(--fs-sm)}
+
+/* ======= find us / faq ======= */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-16)}
+@media(max-width:820px){.loc-grid{grid-template-columns:1fr;gap:var(--s-10)}}
+.loc-detail{display:grid;gap:var(--s-4);margin-top:var(--s-6)}
+.loc-detail .lrow{display:flex;gap:var(--s-4);align-items:flex-start;font-size:var(--fs-sm);color:var(--muted)}
+.loc-detail .lrow svg{width:18px;height:18px;color:var(--brand);margin-top:2px;flex:none}
+.loc-detail .lrow a{text-decoration:underline;text-underline-offset:3px}
+.faq details{border-top:1px solid var(--hair)}
+.faq details:last-child{border-bottom:1px solid var(--hair)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:var(--s-6);
+  align-items:center;padding:var(--s-5) 0;font-family:var(--font-display);font-weight:600;font-size:var(--fs-md);min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--font-sans);font-weight:400;font-size:24px;color:var(--faint);line-height:1;transition:transform var(--t) var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 0 var(--s-5);color:var(--muted);max-width:58ch}
+
+/* ======= CTA band ======= */
+.band{border-radius:var(--r-lg);background:var(--brand-ink);color:#f4efe4;padding:var(--s-12);
+  display:flex;flex-wrap:wrap;gap:var(--s-6);align-items:center;justify-content:space-between}
+.band h2{font-size:var(--fs-xl);color:#f4efe4;max-width:20ch}
+.band .sub2{color:#c2b9a8;font-size:var(--fs-sm);margin-top:var(--s-2)}
+@media(max-width:700px){.band{padding:var(--s-8)}}
+
+/* ======= footer ======= */
+.footer{padding:var(--s-20) 0 var(--s-8);overflow:hidden}
+.footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:var(--s-8);padding-bottom:var(--s-12);border-bottom:1px solid var(--line)}
+@media(max-width:700px){.footer .cols{grid-template-columns:1fr 1fr}}
+.footer h4{color:var(--ink);font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;margin-bottom:var(--s-4);font-family:var(--font-sans);font-weight:500}
+.footer a,.footer button.flink{display:block;padding:11px 0;min-height:44px;font-size:var(--fs-sm);color:var(--muted);transition:color var(--t-fast);text-align:left}
+.footer a:hover,.footer button.flink:hover{color:var(--ink)}
+.footer .about-f{color:var(--muted);font-size:var(--fs-sm);max-width:36ch}
+.footer .bar{display:flex;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;padding-top:var(--s-6);font-size:var(--fs-xs);color:var(--faint)}
+.foot-mark{font-family:var(--font-display);font-weight:600;font-style:italic;line-height:.9;
+  font-size:clamp(56px,14vw,190px);color:var(--ink);opacity:.94;padding:var(--s-12) 0 var(--s-4);user-select:none;text-align:center}
+
+.stickbar{position:fixed;left:0;right:0;bottom:0;z-index:150;display:none;gap:var(--s-3);
+  padding:12px var(--s-4) calc(12px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.stickbar .btn{flex:1}
+@media(max-width:700px){.stickbar{display:flex}body{padding-bottom:76px}}
+
+/* reveals: base-visible; .pre is applied by JS only, so no-JS pages are complete */
+.pre{opacity:0;transform:translateY(24px)}
+.pre.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.kine .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.kine .wi{display:inline-block;will-change:transform}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.06s!important;scroll-behavior:auto!important}
+  .pre{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#journey">Skip to content</a>
+<div class="devbar" id="devbar" hidden>Development preview. Marked placeholders never reach the live site.</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="./" class="brand" aria-label="sh-WOAH Beaute House, home">
+      <span class="bm" aria-hidden="true">sW</span>
+      <span class="bt">sh-WOAH<small>Beaute House · Negombo</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <button type="button" data-door="salon" onclick="pickDoor('salon')">The salon</button>
+      <button type="button" data-door="bridal" onclick="pickDoor('bridal')">Bridal</button>
+      <button type="button" data-door="concept" onclick="pickDoor('concept')">The store</button>
+      <a href="#find">Find us</a>
+    </nav>
+    <button class="btn btn-primary" type="button" onclick="waSend('General','General question',[],this)">WhatsApp us</button>
+    <button class="hamb" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" onclick="openDrawer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" inert>
+  <nav>
+    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('salon')">The salon</button>
+    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('bridal')">Bridal</button>
+    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('concept')">The store</button>
+    <button type="button" class="dlink" onclick="closeDrawer();goTool('all','about')">About</button>
+    <a class="dlink" href="#find" onclick="closeDrawer()">Find us</a>
+  </nav>
+  <button class="btn btn-primary" type="button" onclick="closeDrawer();waSend('General','General question',[],this)">WhatsApp us</button>
+</aside>
+
+<!-- ======= FIRST SCREEN ======= -->
+<section class="door-hero" id="top">
+  <div class="wrap">
+    <p class="idline">sh-WOAH Beaute House · Negombo</p>
+    <h1 class="kine" data-split>What would you like from us?</h1>
+    <p class="sub">Skin, hair, nails, bridal and a small concept store. Pick a door and the page becomes yours.</p>
+
+    <!-- The editorial mosaic. Tiles are designed placeholder panels until real
+         photography is confirmed (CONTENT-REQUIRED.md). Composition: salon
+         cluster left, the product alone centre, bridal right. -->
+    <div class="mosaic" role="group" aria-label="Choose what you came for">
+      <button type="button" class="tile tile-s1 tile-photo" data-door="salon" onclick="pickDoor('salon')">
+        <img src="assets/nails-work.jpg" width="800" height="971" alt="Nail work done at sh-WOAH, a French manicure with gold star details">
+        <span class="t-door">The salon</span>
+        <span class="t-line">Hair, skin and nails, this week.</span>
+      </button>
+      <button type="button" class="tile tile-s2 tile-photo" data-door="salon" onclick="pickDoor('salon')">
+        <img src="assets/salon-room.jpg" width="800" height="1044" alt="The salon floor at sh-WOAH in Negombo">
+        <span class="t-door">The salon</span>
+        <span class="t-line">The room itself.</span>
+      </button>
+      <button type="button" class="tile tile-c" data-door="concept" onclick="pickDoor('concept')">
+        <svg class="t-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="ph-cap">Photo slot: the product, alone</span>
+        <span class="t-door">The concept store</span>
+        <span class="t-line">Take the result home.</span>
+      </button>
+      <button type="button" class="tile tile-b1" data-door="bridal" onclick="pickDoor('bridal')">
+        <span class="ph-cap">Photo slot: detail, hands or veil</span>
+        <span class="t-door">Bridal</span>
+        <span class="t-line">The details.</span>
+      </button>
+      <button type="button" class="tile tile-b2" data-door="bridal" onclick="pickDoor('bridal')">
+        <svg class="t-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="14" r="6"/><path d="M9 8l1.5-4h3L15 8"/></svg>
+        <span class="ph-cap">Photo slot: the one photographed day</span>
+        <span class="t-door">Bridal</span>
+        <span class="t-line">The one photographed day.</span>
+      </button>
+    </div>
+    <div class="notsure">
+      <button type="button" onclick="pickDoor('all')">Not sure? Have a look around first.</button>
+    </div>
+  </div>
+</section>
+
+<div id="journey" aria-hidden="true"></div>
+
+<!-- ======= OVERVIEW (default, and the Not sure route) ======= -->
+<section class="section" data-modes="all" id="overview">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">The house</span>
+      <h2>Three ways in.</h2>
+      <p>Most people come for the chairs. Some come for a date months away. A few just want the shelf.</p>
+    </div>
+    <figure class="house-shot" data-sr>
+      <img src="assets/exterior-three-doors.jpg" width="1200" height="780" loading="lazy" alt="The sh-WOAH arcade in Negombo, with Bridal, Concept Store and Nails &amp; Hair signs over their own doors">
+      <figcaption>Banyan Complex, Heritance, Negombo. Each door is signed.</figcaption>
+    </figure>
+    <div class="lines" data-sr>
+      <button type="button" class="line-card" onclick="pickDoor('salon')">
+        <span class="eyebrow">The salon</span>
+        <h3>Hair, skin and nails.</h3>
+        <p>The weekly habit and the visitor's hour. Book a chair on WhatsApp.</p>
+        <span class="go">Book a chair <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+      </button>
+      <button type="button" class="line-card" onclick="pickDoor('bridal')">
+        <span class="eyebrow">Bridal</span>
+        <h3>The one photographed day.</h3>
+        <p>Bridal runs on one date. Send yours first and plan the rest with the salon.</p>
+        <span class="go">Check a date <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+      </button>
+      <button type="button" class="line-card" onclick="pickDoor('concept')">
+        <span class="eyebrow">The concept store</span>
+        <h3>Take the result home.</h3>
+        <p>The one part of sh-WOAH that leaves with you.</p>
+        <span class="go">Ask what is in <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ======= QUICK TOOLS (overview) ======= -->
+<section class="section" data-modes="all" id="tools" style="padding-top:0">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Shortcuts</span>
+      <h2>Know what you need already?</h2>
+    </div>
+    <div class="tools-card" data-sr>
+      <button type="button" class="tool-row" onclick="goTool('salon','book')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
+        <span><span class="tr-name">Book a chair</span><span class="tr-sub" style="display:block">Hair, nails or skin, on WhatsApp in two minutes</span></span>
+        <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </button>
+      <button type="button" class="tool-row" onclick="goTool('bridal','bridal-date')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+        <span><span class="tr-name">Check a wedding date</span><span class="tr-sub" style="display:block">Send the date first. The salon confirms it</span></span>
+        <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </button>
+      <button type="button" class="tool-row" onclick="goTool('salon','leaving')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        <span><span class="tr-name">Leaving Negombo soon?</span><span class="tr-sub" style="display:block">Flying out and want something done before you go</span></span>
+        <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ======= ABOUT (overview) ======= -->
+<section class="section scene-dark" data-modes="all" id="about">
+  <div class="wrap about-grid">
+    <div data-sr>
+      <span class="eyebrow">About</span>
+      <h2 style="font-size:var(--fs-3xl);margin:var(--s-4) 0 var(--s-4)">The house Harini built.</h2>
+      <p style="color:var(--muted);max-width:52ch">sh-WOAH is a beauty house in Negombo run by its founder, Harini Fernando. One roof holds the salon, the bridal work and a small concept store, each behind its own signed door at Banyan Complex.</p>
+      <p style="color:var(--muted);max-width:52ch;margin-top:var(--s-4)">The Google listing tells the story better than we could. 128 reviews rated excellent, written in four languages, by the regular who comes every few weeks and by the visitor who found us on the day of a flight.</p>
+    </div>
+    <div class="about-facts" data-sr>
+      <div class="af scene-dark" style="background:var(--surface)"><b>Founder and Director</b><span>Harini Fernando</span></div>
+      <div class="af scene-dark" style="background:var(--surface)"><b>Three doors</b><span>The salon, bridal and the concept store</span></div>
+      <div class="af scene-dark" style="background:var(--surface)"><b>Open daily</b><span>10:00 to 20:00, at Banyan Complex, Heritance, Negombo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= SALON MODE ======= -->
+<section class="section scene-dark" data-modes="salon" id="salon-head">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">The salon</span>
+      <h2>Hair, skin and nails, done properly.</h2>
+      <p>Tell the desk what you need on WhatsApp. They answer in opening hours, daily 10:00 to 20:00.</p>
+    </div>
+    <div class="svc" data-sr>
+      <div class="svc-card scene-dark" style="background:var(--surface)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
+        <h3>Hair</h3>
+        <button class="btn btn-ghost" type="button" onclick="prefillBooking('Hair')">Book hair</button>
+      </div>
+      <div class="svc-card scene-dark" style="background:var(--surface)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 12.5V6a1.5 1.5 0 0 1 3 0v5"/><path d="M14 11V4.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 8.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.35L3.3 13.6a1.6 1.6 0 0 1 2.6-1.85L8 14V5a1.5 1.5 0 0 1 3 0"/></svg>
+        <h3>Nails</h3>
+        <button class="btn btn-ghost" type="button" onclick="prefillBooking('Nails')">Book nails</button>
+      </div>
+      <div class="svc-card scene-dark" style="background:var(--surface)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+        <h3>Skin</h3>
+        <button class="btn btn-ghost" type="button" onclick="prefillBooking('Skin')">Book skin</button>
+      </div>
+    </div>
+    <p class="tool-note" data-sr>The full treatment menu is being written up with prices. Until it is published here, the desk will send it to you.</p>
+  </div>
+</section>
+
+<section class="section" data-modes="salon" id="book">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Book a chair</span>
+      <h2>Two minutes, then it is with the desk.</h2>
+    </div>
+    <div class="tool-card" data-sr>
+      <div class="needs-js">
+        <div class="f-grid">
+          <div class="field" style="grid-column:1/-1">
+            <label id="bkSvcLbl">What are you coming in for?</label>
+            <div class="chips" role="group" aria-labelledby="bkSvcLbl" id="bkSvc">
+              <button type="button" class="chip" data-v="Hair">Hair</button>
+              <button type="button" class="chip" data-v="Nails">Nails</button>
+              <button type="button" class="chip" data-v="Skin">Skin</button>
+              <button type="button" class="chip" data-v="Not sure yet">Not sure yet</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="bkWho">Anyone you would like to book with? <span class="hint">Optional</span></label>
+            <input id="bkWho" type="text" autocomplete="off" placeholder="A name, if you know one">
+          </div>
+          <div class="field">
+            <label for="bkWhen">A day or time that suits you <span class="hint">Optional</span></label>
+            <input id="bkWhen" type="text" autocomplete="off" placeholder="For example Saturday morning">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" style="margin-top:var(--s-6)" type="button" onclick="sendBooking(this)">Book on WhatsApp</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+        <p class="tool-note">A time is confirmed once the desk replies.</p>
+      </div>
+      <p class="nojs-note">This form needs JavaScript. WhatsApp or call the salon on <a href="tel:+94770754224">+94 77 075 4224</a> with what you need.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-modes="salon" id="prices">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Prices</span>
+      <h2>What things cost.</h2>
+    </div>
+    <div class="price-wrap" data-sr>
+      <div class="price-neutral" data-prod-only>
+        <p>The price list is coming to this page. Ask on WhatsApp and the desk will send it to you.</p>
+        <button class="btn btn-ghost" type="button" onclick="waSend('Salon','Ask for prices',[],this)">Ask for prices</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+      </div>
+      <div data-dev-only hidden>
+        <span class="ph-cap">Placeholder table. Structure only, no real figures. Every price must be supplied by Harini in writing.</span>
+        <table class="price-table" style="margin-top:12px">
+          <thead><tr><th>Service</th><th>Takes about</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td>[Service name]</td><td>[XX min]</td><td>Rs [X,XXX]</td></tr>
+            <tr><td>[Service name]</td><td>[XX min]</td><td>Rs [X,XXX]</td></tr>
+            <tr><td>[Service name]</td><td>[XX min]</td><td>Rs [X,XXX]</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-modes="salon" id="leaving">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Flying out</span>
+      <h2>Leaving Negombo soon?</h2>
+      <p>Tell the desk when you leave and when you could come in. They will tell you what is possible.</p>
+    </div>
+    <div class="tool-card" data-sr>
+      <div class="needs-js">
+        <div class="f-grid">
+          <div class="field">
+            <label for="lvDate">When do you leave?</label>
+            <input id="lvDate" type="date">
+          </div>
+          <div class="field">
+            <label for="lvTime">Around what time? <span class="hint">Optional</span></label>
+            <input id="lvTime" type="text" autocomplete="off" placeholder="For example 9 at night">
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label id="lvFlyLbl">Are you flying out?</label>
+            <div class="chips" role="group" aria-labelledby="lvFlyLbl" id="lvFly">
+              <button type="button" class="chip" data-v="Yes, flying">Yes</button>
+              <button type="button" class="chip" data-v="No, travelling on">No, travelling on</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="lvWant">What would you like done?</label>
+            <input id="lvWant" type="text" autocomplete="off" placeholder="Nails, a cut, a blow dry">
+          </div>
+          <div class="field">
+            <label for="lvFree">When could you reach the salon?</label>
+            <input id="lvFree" type="text" autocomplete="off" placeholder="For example tomorrow after 3">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" style="margin-top:var(--s-6)" type="button" onclick="sendLeaving(this)">Send it to the desk</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+        <p class="tool-note">We will not guess what fits before a flight. The desk replies in opening hours with what is genuinely possible.</p>
+      </div>
+      <p class="nojs-note">This form needs JavaScript. WhatsApp or call the salon on <a href="tel:+94770754224">+94 77 075 4224</a> with your departure day and what you would like done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= BRIDAL MODE ======= -->
+<section class="section scene-dark" data-modes="bridal" id="bridal-head">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Bridal</span>
+      <h2>The one photographed day.</h2>
+      <p>Bridal runs on one date. Send yours first, before anything else is decided.</p>
+    </div>
+    <div class="steps" data-sr>
+      <div class="step scene-dark" style="background:var(--surface)"><h3>Send the date.</h3><p>The form below takes two minutes and goes straight to the salon.</p></div>
+      <div class="step scene-dark" style="background:var(--surface)"><h3>The salon replies.</h3><p>A date is held only once they confirm it. Sending the form does not book the day.</p></div>
+      <div class="step scene-dark" style="background:var(--surface)"><h3>Plan the rest together.</h3><p>Trials, timings and the party, worked out with the team.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-modes="bridal" id="bridal-date">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Your date</span>
+      <h2>Check my date.</h2>
+    </div>
+    <div class="tool-card" data-sr>
+      <div class="needs-js">
+        <div class="f-grid">
+          <div class="field">
+            <label for="brDate">The wedding date</label>
+            <input id="brDate" type="date">
+          </div>
+          <div class="field">
+            <label for="brParty">How many in the party? <span class="hint">Bride included</span></label>
+            <input id="brParty" type="number" min="1" max="30" inputmode="numeric" placeholder="For example 4">
+          </div>
+          <div class="field">
+            <label for="brCeremony">Where is the ceremony?</label>
+            <input id="brCeremony" type="text" autocomplete="off" placeholder="Hotel or venue, town">
+          </div>
+          <div class="field">
+            <label for="brPrep">Where will you get ready?</label>
+            <input id="brPrep" type="text" autocomplete="off" placeholder="At the venue, at home, at the salon">
+          </div>
+          <div class="field">
+            <label for="brWho">Anyone you would like on the day? <span class="hint">Optional</span></label>
+            <input id="brWho" type="text" autocomplete="off" placeholder="A name, if you know one">
+          </div>
+          <div class="field">
+            <label id="brRouteLbl">How should the salon reply?</label>
+            <div class="chips" role="group" aria-labelledby="brRouteLbl" id="brRoute">
+              <button type="button" class="chip" data-v="Reply on WhatsApp" aria-pressed="true">WhatsApp</button>
+              <button type="button" class="chip" data-v="Call me">Call me</button>
+            </div>
+          </div>
+          <div class="field" id="brPhoneWrap" hidden>
+            <label for="brPhone">The number to call</label>
+            <input id="brPhone" type="tel" autocomplete="tel" placeholder="07X XXX XXXX">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" style="margin-top:var(--s-6)" type="button" onclick="sendBridal(this)">Send my date to the salon</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+        <p class="tool-note">Sending this does not book the day. The date is confirmed only when the salon replies.</p>
+      </div>
+      <p class="nojs-note">This form needs JavaScript. WhatsApp or call the salon on <a href="tel:+94770754224">+94 77 075 4224</a> with your wedding date and where the day happens.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-modes="bridal" id="bridal-packages">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">Packages</span>
+      <h2>What a bridal booking includes.</h2>
+    </div>
+    <div class="price-wrap" data-sr>
+      <div class="price-neutral" data-prod-only>
+        <p>The bridal packages are being written up for this page. Ask and the desk will talk you through them.</p>
+        <button class="btn btn-ghost" type="button" onclick="waSend('Bridal','Ask about packages',[],this)">Ask about packages</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+      </div>
+      <div data-dev-only hidden>
+        <span class="ph-cap">Placeholder packages. Structure only. Real packages and figures come from Harini.</span>
+        <table class="price-table" style="margin-top:12px">
+          <thead><tr><th>Package</th><th>Covers</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td>[Package name]</td><td>[What it covers]</td><td>Rs [XX,XXX]</td></tr>
+            <tr><td>[Package name]</td><td>[What it covers]</td><td>Rs [XX,XXX]</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= CONCEPT MODE ======= -->
+<section class="section scene-dark" data-modes="concept" id="concept-head">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">The concept store</span>
+      <h2>Take the result home.</h2>
+      <p>The store is the part of sh-WOAH that leaves with you. What is on the shelf changes, so ask.</p>
+    </div>
+    <div data-sr>
+      <button class="btn btn-primary btn-lg" type="button" onclick="waSend('Concept','Ask about the store',[],this)">Ask what is in the store</button>
+      <p class="form-note" data-note></p>
+      <div class="wa-preview" data-preview></div>
+    </div>
+    <div data-dev-only hidden style="margin-top:var(--s-10)">
+      <span class="ph-cap">Development only. The product range and what jac is are unconfirmed, so no shopfront ships in this build. Structure below is ready for the day Harini supplies the range.</span>
+      <div class="svc" style="margin-top:12px" id="conceptGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= REVIEWS (all, salon, bridal) ======= -->
+<section class="section" data-modes="all salon bridal" id="reviews">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">What customers write</span>
+      <h2>Rated excellent across <i style="font-style:normal;color:var(--brand)">128</i> Google reviews.</h2>
+      <p>They arrive in English, German, Dutch and Italian, mostly from people passing through Negombo.</p>
+    </div>
+    <div data-sr>
+      <div class="rev-filters" id="revFilters" hidden></div>
+      <div class="rev-grid" id="revGrid" hidden></div>
+      <div class="rev-fallback" id="revFallback">
+        <p class="big">We would rather you read them where they live.</p>
+        <p style="color:var(--muted)">Every review sits on our public Google listing, in the writer's own words and language. Nothing is edited before you see it.</p>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo" target="_blank" rel="noopener">Read them on Google</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FIND US + FAQ (every mode) ======= -->
+<section class="section scene-dark" data-modes="all salon bridal concept" id="find">
+  <div class="wrap loc-grid">
+    <div data-sr>
+      <span class="eyebrow">Find us</span>
+      <h2 style="font-size:var(--fs-2xl);margin:var(--s-5) 0">One address in Negombo.</h2>
+      <div class="loc-detail">
+        <div class="lrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span>sh-WOAH Beaute House, Banyan Complex, Heritance, Negombo</span></div>
+        <div class="lrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Daily, 10:00 to 20:00</span></div>
+        <div class="lrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+94770754224">+94 77 075 4224</a></div>
+        <div class="lrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6L22 7"/></svg><a href="mailto:inquiries@shwoah.com">inquiries@shwoah.com</a></div>
+      </div>
+      <iframe class="map-embed" style="margin-top:var(--s-8)" loading="lazy" title="Map to sh-WOAH Beaute House, Banyan Complex, Negombo"
+        src="https://www.google.com/maps?q=sh-WOAH%20Beaute%20House%20Banyan%20Complex%20Negombo&output=embed"
+        referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <a class="btn btn-ghost btn-lg" style="margin-top:var(--s-5)" href="https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo" target="_blank" rel="noopener">Open in Maps</a>
+    </div>
+    <div data-sr>
+      <span class="eyebrow">Good to know</span>
+      <h2 style="font-size:var(--fs-2xl);margin:var(--s-5) 0">Before you come in.</h2>
+      <div class="faq">
+        <details><summary>When are you open?</summary><p class="a">Daily, 10:00 to 20:00.</p></details>
+        <details><summary>Where exactly are you?</summary><p class="a">Banyan Complex, Heritance, Negombo. The map link below takes you to the door.</p></details>
+        <details><summary>How do I book?</summary><p class="a">Message us on WhatsApp or call. A time is confirmed once the desk replies.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= CTA BAND (overview) ======= -->
+<section class="section" data-modes="all" id="ask">
+  <div class="wrap">
+    <div class="band" data-sr>
+      <div>
+        <h2>Not a form person? Just ask.</h2>
+        <p class="sub2">One message. The desk answers in opening hours.</p>
+      </div>
+      <div>
+        <button class="btn btn-primary btn-lg" type="button" onclick="waSend('General','Ask us anything',[],this)">Ask us anything</button>
+        <p class="form-note" data-note></p>
+        <div class="wa-preview" data-preview></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="brand" style="margin-bottom:var(--s-4)"><span class="bm" aria-hidden="true">sW</span><span class="bt">sh-WOAH<small>Beaute House · Negombo</small></span></div>
+        <p class="about-f">A beauty house in Negombo. Skin, nails, hair, bridal and the concept store.</p>
+      </div>
+      <div><h4>The doors</h4>
+        <button type="button" class="flink" onclick="pickDoor('salon')">The salon</button>
+        <button type="button" class="flink" onclick="pickDoor('bridal')">Bridal</button>
+        <button type="button" class="flink" onclick="pickDoor('concept')">The concept store</button>
+        <button type="button" class="flink" onclick="goTool('all','about')">About the house</button>
+      </div>
+      <div><h4>Contact</h4>
+        <a href="tel:+94770754224">+94 77 075 4224</a>
+        <a href="mailto:inquiries@shwoah.com">inquiries@shwoah.com</a>
+        <a href="https://www.instagram.com/shwoah.beaute" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/shwoahbeaute" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.tiktok.com/@shwoah.beaute" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="foot-mark" data-sr aria-hidden="true">sh-WOAH</div>
+    <div class="bar"><span>© <span id="yr">2026</span> sh-WOAH Beaute House.</span><span>Site by Business Booster</span></div>
+  </div>
+</footer>
+
+<div class="stickbar">
+  <button class="btn btn-ghost" type="button" onclick="document.getElementById('top').scrollIntoView({behavior:'smooth'})">Doors</button>
+  <button class="btn btn-primary" type="button" id="stickCta" onclick="stickAction(this)">WhatsApp</button>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIG. The single per-client edit point.
+   ===================================================================== */
+const CFG = {
+  brand: 'sh-WOAH',
+  legalName: 'sh-WOAH Beaute House',      // capitalisation pending Harini's confirmation
+  wa: '',                                  // WhatsApp digits (94XXXXXXXXX). EMPTY until Harini confirms the line. See CONTENT-REQUIRED.md
+  phone: '+94770754224',                   // public listing, verified as a PHONE only
+  phonePretty: '+94 77 075 4224',
+  email: 'inquiries@shwoah.com',
+};
+
+/* Reviews: verified only. Schema per the build brief. Empty until a confirmed
+   subset is supplied (BB pulls by hand, Harini confirms). Live Google sync
+   needs the Places API and a paid key: swap loadReviews() only. */
+const REVIEWS = [
+  /* { id:'', author:'', rating:5, originalText:'', translatedText:'', language:'de',
+       serviceLine:'salon', staffMentioned:[], sourceUrl:'', reviewDate:'', verified:false } */
+];
+const TEAM = [];        /* { id, name, role, specialities:[], photo, languages:[], bookableByName } */
+const CONCEPT = { flagged: true, products: [] };  /* { id, name, priceLKR:null, photo, description, verified:false } */
+
+/* =====================================================================
+   Boot, mode plumbing, campaign tags
+   ===================================================================== */
+document.documentElement.classList.add('js');
+document.documentElement.classList.remove('nojs');
+
+const Q = new URLSearchParams(location.search);
+const CAMPAIGN = Q.get('c') || Q.get('utm_campaign') || 'organic';
+const DEV = Q.get('preview') === 'dev';
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CAPTURE = Q.get('capture') === '1';   /* verification rail: paints end states, no motion */
+let io = null;
+if (DEV) {
+  document.body.classList.add('dev');
+  document.getElementById('devbar').hidden = false;
+  document.querySelectorAll('[data-dev-only]').forEach(el => el.hidden = false);
+  document.querySelectorAll('[data-prod-only]').forEach(el => el.hidden = true);
+}
+
+const VALID = ['salon','bridal','concept'];
+const DOOR_LABEL = { salon:'Salon', bridal:'Bridal', concept:'Concept', all:'General' };
+let MODE = 'all';
+
+function setMode(m, scroll){
+  MODE = VALID.includes(m) ? m : 'all';
+  document.body.dataset.mode = MODE;
+  document.querySelectorAll('[data-modes]').forEach(s => {
+    s.hidden = !s.dataset.modes.split(' ').includes(MODE);
+  });
+  document.querySelectorAll('[data-door]').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.door === MODE)));
+  const q = new URLSearchParams(location.search);
+  if (MODE === 'all') q.delete('service'); else q.set('service', MODE);
+  const qs = q.toString();
+  history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+  const titles = {
+    all:'sh-WOAH Beaute House | Salon, Bridal and Concept Store in Negombo',
+    salon:'The salon | sh-WOAH Beaute House, Negombo',
+    bridal:'Bridal | sh-WOAH Beaute House, Negombo',
+    concept:'The concept store | sh-WOAH Beaute House, Negombo'
+  };
+  document.title = titles[MODE];
+  const stick = document.getElementById('stickCta');
+  stick.textContent = MODE === 'bridal' ? 'Check my date' : 'WhatsApp';
+  if (scroll) document.getElementById('overview').parentNode
+    .querySelector(MODE === 'all' ? '#overview' : '[data-modes="' + MODE + '"]')
+    .scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block:'start' });
+  revealVisible();
+}
+function pickDoor(m){ setMode(m, true); }
+function goTool(mode, id){
+  setMode(mode, false);
+  setTimeout(() => { const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block:'start' }); }, 0);
+}
+function stickAction(btn){
+  if (MODE === 'bridal') { document.getElementById('bridal-date').scrollIntoView({behavior:REDUCE?'auto':'smooth'}); return; }
+  waSend(DOOR_LABEL[MODE], 'Quick message', [], btn);
+}
+setMode(Q.get('service') || 'all', false);
+
+/* =====================================================================
+   The tag rail. Every route to WhatsApp opens with a line the desk can
+   read at a glance. A tag names a DECLARED source; it proves nothing
+   about a booking. The desk routine (DESK-ROUTINE.md) closes that loop.
+   ===================================================================== */
+function tagLine(door, cta){
+  return '[Source: Website | Door: ' + door + ' | CTA: ' + cta + ' | Campaign: ' + CAMPAIGN + ']';
+}
+function nearNote(el, sel){
+  const host = el.closest('.tool-card, .price-neutral, .band > div, .sect-head, section, .drawer, .nav') || document;
+  return host.querySelector(sel);
+}
+function waSend(door, cta, lines, el){
+  const msg = tagLine(door, cta) + '\n' + 'Hi sh-WOAH.' + (lines.length ? '\n' + lines.join('\n') : '');
+  const note = el ? nearNote(el, '[data-note]') : null;
+  const prev = el ? nearNote(el, '[data-preview]') : null;
+  if (!CFG.wa) {
+    if (DEV && prev) {
+      prev.textContent = 'WhatsApp preview (number pending confirmation). This exact message will be sent:\n\n' + msg;
+      prev.classList.add('show');
+    }
+    if (note) {
+      note.className = 'form-note warn show';
+      note.textContent = 'WhatsApp is being connected. Until then call ' + CFG.phonePretty + ' or email ' + CFG.email + '.';
+    }
+    return false;
+  }
+  window.open('https://wa.me/' + CFG.wa + '?text=' + encodeURIComponent(msg), '_blank');
+  if (note) { note.className = 'form-note ok show'; note.textContent = 'Opened in WhatsApp. Send it and the desk replies in opening hours.'; }
+  return true;
+}
+
+/* chips: single-select groups */
+function chipGroup(id, onPick){
+  const host = document.getElementById(id);
+  if (!host) return () => null;
+  host.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+    host.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x === c)));
+    if (onPick) onPick(c.dataset.v);
+  });
+  return () => { const on = host.querySelector('[aria-pressed="true"]'); return on ? on.dataset.v : null; };
+}
+const getBkSvc = chipGroup('bkSvc');
+const getLvFly = chipGroup('lvFly');
+const getBrRoute = chipGroup('brRoute', v => {
+  document.getElementById('brPhoneWrap').hidden = v !== 'Call me';
+});
+
+function prefillBooking(svc){
+  document.getElementById('book').scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' });
+  const host = document.getElementById('bkSvc');
+  host.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === svc)));
+}
+function sendBooking(btn){
+  const lines = [];
+  const svc = getBkSvc(); if (svc) lines.push('Service: ' + svc);
+  const who = document.getElementById('bkWho').value.trim(); if (who) lines.push('With: ' + who);
+  const when = document.getElementById('bkWhen').value.trim(); if (when) lines.push('When suits: ' + when);
+  waSend('Salon', 'Book a chair', lines, btn);
+}
+function sendLeaving(btn){
+  const lines = [];
+  const d = document.getElementById('lvDate').value; if (d) lines.push('Leaving on: ' + d);
+  const t = document.getElementById('lvTime').value.trim(); if (t) lines.push('Around: ' + t);
+  const f = getLvFly(); if (f) lines.push(f);
+  const w = document.getElementById('lvWant').value.trim(); if (w) lines.push('Would like: ' + w);
+  const free = document.getElementById('lvFree').value.trim(); if (free) lines.push('Can come in: ' + free);
+  waSend('Salon', 'Leaving soon', lines, btn);
+}
+function sendBridal(btn){
+  const note = nearNote(btn, '[data-note]');
+  const d = document.getElementById('brDate').value;
+  if (!d) { note.className='form-note warn show'; note.textContent='The date is the one thing the salon needs first.'; return; }
+  const lines = ['Wedding date: ' + d];
+  const p = document.getElementById('brParty').value; if (p) lines.push('Party of: ' + p);
+  const c = document.getElementById('brCeremony').value.trim(); if (c) lines.push('Ceremony at: ' + c);
+  const g = document.getElementById('brPrep').value.trim(); if (g) lines.push('Getting ready at: ' + g);
+  const w = document.getElementById('brWho').value.trim(); if (w) lines.push('Asking for: ' + w);
+  const r = getBrRoute(); if (r) lines.push(r + (r === 'Call me' && document.getElementById('brPhone').value.trim() ? ' on ' + document.getElementById('brPhone').value.trim() : ''));
+  waSend('Bridal', 'Check my date', lines, btn);
+}
+
+/* =====================================================================
+   Reviews engine. Verified rows only in production; the fallback block
+   stays whenever there is nothing verified to show. Never implies all
+   128 are on the page. A visitor's own language is ordered first.
+   ===================================================================== */
+const LANG_NAME = { en:'English', de:'German', nl:'Dutch', it:'Italian' };
+function renderReviews(){
+  let rows = REVIEWS.filter(r => r.verified);
+  if (DEV && !rows.length) {
+    rows = [
+      { author:'[Placeholder]', rating:5, originalText:'[Placeholder review. Not a real customer. Composition check only.]', translatedText:'', language:'en', serviceLine:'salon', staffMentioned:[], reviewDate:'' },
+      { author:'[Placeholder]', rating:5, originalText:'[Platzhalter. Kein echter Kunde.]', translatedText:'[Placeholder. Not a real customer.]', language:'de', serviceLine:'bridal', staffMentioned:[], reviewDate:'' },
+      { author:'[Placeholder]', rating:5, originalText:'[Placeholder review. Not a real customer.]', translatedText:'', language:'en', serviceLine:'salon', staffMentioned:[], reviewDate:'' }
+    ];
+  }
+  if (MODE === 'salon' || MODE === 'bridal') rows = rows.filter(r => r.serviceLine === MODE);
+  const grid = document.getElementById('revGrid'), fb = document.getElementById('revFallback'),
+        filters = document.getElementById('revFilters');
+  if (!rows.length) { grid.hidden = true; filters.hidden = true; fb.hidden = false; return; }
+  const mine = (navigator.language || 'en').slice(0,2);
+  rows.sort((a,b) => (b.language === mine) - (a.language === mine));
+  grid.innerHTML = rows.map(r => `
+    <figure class="rev-card">
+      <div class="r-meta"><span>${r.author}</span><span>${LANG_NAME[r.language] || r.language}${r.reviewDate ? ' · ' + r.reviewDate : ''}</span></div>
+      <blockquote class="r-text">${r.translatedText || r.originalText}</blockquote>
+      ${r.translatedText ? '<p class="r-orig">Original: ' + r.originalText + '</p><p class="r-orig">Translated from ' + (LANG_NAME[r.language] || r.language) + '.</p>' : ''}
+    </figure>`).join('');
+  grid.hidden = false; fb.hidden = true; filters.hidden = true;
+}
+
+/* Concept store dev preview: structure only, flagged, no public shopfront. */
+function renderConcept(){
+  const grid = document.getElementById('conceptGrid');
+  if (!grid || !DEV) return;
+  const rows = CONCEPT.products.length ? CONCEPT.products : [
+    { name:'[Product name]', description:'[One honest line]', priceLKR:null },
+    { name:'[Product name]', description:'[One honest line]', priceLKR:null }
+  ];
+  grid.innerHTML = rows.map(p => `
+    <div class="svc-card scene-dark" style="background:var(--surface)">
+      <h3>${p.name}</h3><p style="color:var(--muted);font-size:var(--fs-sm)">${p.description}</p>
+      <p class="tag-lbl">${p.priceLKR == null ? 'Rs [X,XXX]' : ''}</p>
+    </div>`).join('');
+}
+
+/* =====================================================================
+   Drawer (ported verbatim from the master), year, reveals
+   ===================================================================== */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => requestAnimationFrame(() => nav.classList.toggle('stick', scrollY > 8)), { passive:true });
+const drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim');
+const drawerBtn = document.querySelector('.hamb');
+let drawerScrollY = 0;
+function openDrawer(){
+  if (drawer.classList.contains('open')) return;
+  drawerScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  drawer.classList.add('open'); scrim.classList.add('open');
+  drawer.removeAttribute('inert');
+  if (drawerBtn) drawerBtn.setAttribute('aria-expanded','true');
+  document.body.style.top = (-drawerScrollY) + 'px';
+  document.body.classList.add('drawer-lock');
+  const f = drawer.querySelector('a[href],button'); if (f) f.focus();
+}
+function closeDrawer(){
+  if (!drawer.classList.contains('open')) return;
+  drawer.classList.remove('open'); scrim.classList.remove('open');
+  drawer.setAttribute('inert','');
+  if (drawerBtn) drawerBtn.setAttribute('aria-expanded','false');
+  document.body.classList.remove('drawer-lock');
+  document.body.style.top = '';
+  window.scrollTo(0, drawerScrollY);
+  if (drawerBtn) drawerBtn.focus();
+}
+document.addEventListener('keydown', e => {
+  if (!drawer.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeDrawer(); return; }
+  if (e.key !== 'Tab') return;
+  const f = drawer.querySelectorAll('a[href],button:not([disabled])');
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* Section reveals: IntersectionObserver, gated. Content ships visible;
+   .pre is added only with JS alive and motion allowed, so a dead script
+   or reduced motion still means a complete page. */
+function revealVisible(){
+  if (!io) return;
+  document.querySelectorAll('[data-sr].pre:not(.in)').forEach(el => io.observe(el));
+}
+if (!REDUCE && !CAPTURE && 'IntersectionObserver' in window) {
+  io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('[data-sr]').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top > innerHeight * 0.9) el.classList.add('pre');
+  });
+  revealVisible();
+}
+
+renderReviews();
+renderConcept();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+/* Hero cinema only: word-mask rise plus a one-time tile wipe. Everything
+   else reveals through the observer above. Dead CDN = complete static page. */
+window.addEventListener('load', () => {
+  if (!window.gsap) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (new URLSearchParams(location.search).get('capture') === '1') return;
+  const words = (function(el){
+    el.innerHTML = el.textContent.trim().split(/\s+/).map(w => '<span class="w"><span class="wi">' + w + '</span></span>').join(' ');
+    return el.querySelectorAll('.wi');
+  })(document.querySelector('.door-hero h1'));
+  gsap.timeline({ defaults:{ ease:'expo.out' } })
+    .from(words, { yPercent:118, duration:1.1, stagger:0.08 }, 0.1)
+    .from('.door-hero .idline, .door-hero .sub', { opacity:0, y:16, duration:.8, stagger:.1 }, 0.7)
+    .from('.mosaic .tile', { clipPath:'inset(0 0 100% 0)', duration:1.0, ease:'power3.inOut', stagger:0.07 }, 0.45)
+    .from('.notsure', { opacity:0, duration:.6 }, 1.4);
+});
+</script>
+</body>
+</html>

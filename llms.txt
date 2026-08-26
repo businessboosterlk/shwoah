@@ -1,0 +1,15 @@
+# sh-WOAH Beaute House
+
+A beauty salon in Negombo, Sri Lanka. Three business lines under one name:
+the salon (skin, hair and nails), bridal and a small concept store.
+
+- Address: Banyan Complex, Heritance, Negombo, Sri Lanka
+- Hours: daily, 10:00 to 20:00
+- Phone: +94 77 075 4224
+- Email: inquiries@shwoah.com
+- Founder and Director: Harini Fernando
+- Rated excellent across 128 Google reviews (count read August 2026)
+
+Key pages:
+- https://shwoah.com/ (the site; ?service=salon, ?service=bridal and
+  ?service=concept open each business line directly)
