@@ -229,6 +229,10 @@ body.dev .ph-cap{display:inline-block}
 .house-shot{border-radius:var(--r-lg);overflow:hidden;margin-bottom:var(--s-12)}
 .house-shot img{width:100%;height:auto}
 .house-shot figcaption{padding:var(--s-3) 0 0;color:var(--faint);font-size:var(--fs-xs)}
+.work-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-3)}
+@media(max-width:820px){.work-grid{grid-template-columns:repeat(2,1fr)}}
+.work-grid figure{margin:0;border-radius:var(--r-md);overflow:hidden;background:var(--surface-2)}
+.work-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
 .map-embed{border:0;width:100%;height:320px;border-radius:var(--r-md);display:block;background:var(--surface-2)}
 .tools-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden;max-width:760px}
 .tool-row{display:flex;width:100%;align-items:center;gap:var(--s-5);padding:var(--s-5) var(--s-6);
@@ -313,13 +317,36 @@ html.nojs .needs-js{display:none}
 .rev-fallback .big{font-family:var(--font-display);font-weight:600;font-size:var(--fs-2xl);line-height:1.1}
 @media(max-width:700px){.rev-fallback{padding:var(--s-6)}.rev-fallback .big{font-size:var(--fs-lg)}}
 .rev-fallback .big i{font-style:normal;color:var(--brand)}
+
+/* review wall: score rail + cards */
+.rev-wall{display:grid;grid-template-columns:230px minmax(0,1fr);gap:var(--s-10);align-items:start}
+@media(max-width:900px){.rev-wall{grid-template-columns:1fr;gap:var(--s-8)}}
+.rev-score{text-align:center;border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--surface);padding:var(--s-8) var(--s-5)}
+.rev-score .word{font-family:var(--font-display);font-weight:600;font-size:var(--fs-xl);line-height:1}
+.rev-score .stars{display:flex;justify-content:center;gap:3px;margin:var(--s-3) 0}
+.rev-score .stars svg{width:20px;height:20px;color:var(--brand)}
+.rev-score .count{color:var(--muted);font-size:var(--fs-sm)}
+.rev-score .count b{color:var(--ink);font-weight:600}
+.rev-score .src{margin-top:var(--s-3);color:var(--faint);font-size:var(--fs-xs)}
 .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4)}
-@media(max-width:820px){.rev-grid{grid-template-columns:1fr}}
-.rev-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:var(--s-6);
-  display:flex;flex-direction:column;gap:var(--s-3);font-size:var(--fs-sm)}
-.rev-card .r-meta{display:flex;justify-content:space-between;gap:var(--s-3);color:var(--faint);font-size:var(--fs-xs)}
-.rev-card .r-text{color:var(--ink)}
-.rev-card .r-orig{color:var(--faint);font-style:italic}
+@media(max-width:900px){.rev-grid{grid-template-columns:1fr}}
+.rev-card{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:var(--s-6);display:flex;flex-direction:column;gap:var(--s-3);font-size:var(--fs-sm);
+  box-shadow:var(--shadow-xs)}
+.rev-card .r-top{display:flex;align-items:center;gap:var(--s-3)}
+.rev-card .r-av{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:var(--brand-ink);color:#e6d3ae;font-family:var(--font-display);font-weight:600;font-size:var(--fs-md)}
+.rev-card .r-who{font-weight:500;color:var(--ink);line-height:1.25}
+.rev-card .r-when{color:var(--faint);font-size:var(--fs-xs)}
+.rev-card .r-stars{display:flex;gap:2px}
+.rev-card .r-stars svg{width:15px;height:15px;color:var(--brand)}
+.rev-card .r-text{color:var(--ink);font-size:var(--fs-base);line-height:1.55}
+.rev-card .r-orig{color:var(--muted);font-style:italic;font-size:var(--fs-xs);
+  border-top:1px solid var(--line);padding-top:var(--s-3)}
+.rev-card .r-lang{margin-top:auto;color:var(--faint);font-size:var(--fs-2xs);
+  letter-spacing:.14em;text-transform:uppercase}
+.rev-note{margin-top:var(--s-6);color:var(--faint);font-size:var(--fs-xs)}
 .rev-filters{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-bottom:var(--s-6)}
 
 /* ======= price surface ======= */
@@ -439,12 +466,12 @@ html.nojs .needs-js{display:none}
          cluster left, the product alone centre, bridal right. -->
     <div class="mosaic" role="group" aria-label="Choose what you came for">
       <button type="button" class="tile tile-s1 tile-photo" data-door="salon" onclick="pickDoor('salon')">
-        <img src="assets/nails-work.jpg" width="800" height="971" alt="Nail work done at sh-WOAH, a French manicure with gold star details">
+        <img src="assets/manicure-bar.jpg" width="1200" height="1463" alt="The manicure bar at sh-WOAH, four customers having their nails done">
         <span class="t-door">The salon</span>
         <span class="t-line">Hair, skin and nails, this week.</span>
       </button>
       <button type="button" class="tile tile-s2 tile-photo" data-door="salon" onclick="pickDoor('salon')">
-        <img src="assets/salon-room.jpg" width="800" height="1044" alt="The salon floor at sh-WOAH in Negombo">
+        <img src="assets/salon-room.jpg" width="900" height="1176" alt="The salon floor at sh-WOAH in Negombo">
         <span class="t-door">The salon</span>
         <span class="t-line">The room itself.</span>
       </button>
@@ -454,8 +481,11 @@ html.nojs .needs-js{display:none}
         <span class="t-door">The concept store</span>
         <span class="t-line">Take the result home.</span>
       </button>
+      <!-- Bridal tiles carry NO photograph: every image supplied so far is salon
+           work, and a manicure under a "Bridal" label claims a portfolio that
+           has not been supplied. Designed tiles until real bridal work arrives. -->
       <button type="button" class="tile tile-b1" data-door="bridal" onclick="pickDoor('bridal')">
-        <span class="ph-cap">Photo slot: detail, hands or veil</span>
+        <span class="ph-cap">Photo slot: real bridal work</span>
         <span class="t-door">Bridal</span>
         <span class="t-line">The details.</span>
       </button>
@@ -483,7 +513,7 @@ html.nojs .needs-js{display:none}
       <p>Most people come for the chairs. Some come for a date months away. A few just want the shelf.</p>
     </div>
     <figure class="house-shot" data-sr>
-      <img src="assets/exterior-three-doors.jpg" width="1200" height="780" loading="lazy" alt="The sh-WOAH arcade in Negombo, with Bridal, Concept Store and Nails &amp; Hair signs over their own doors">
+      <img src="assets/exterior-three-doors.jpg" width="1600" height="1046" loading="lazy" alt="The sh-WOAH arcade in Negombo, with Bridal, Concept Store and Nails &amp; Hair signs over their own doors">
       <figcaption>Banyan Complex, Heritance, Negombo. Each door is signed.</figcaption>
     </figure>
     <div class="lines" data-sr>
@@ -579,6 +609,21 @@ html.nojs .needs-js{display:none}
       </div>
     </div>
     <p class="tool-note" data-sr>The full treatment menu is being written up with prices. Until it is published here, the desk will send it to you.</p>
+  </div>
+</section>
+
+<section class="section" data-modes="salon" id="work">
+  <div class="wrap">
+    <div class="sect-head" data-sr>
+      <span class="eyebrow">The work</span>
+      <h2>Done here, in this room.</h2>
+    </div>
+    <div class="work-grid" data-sr>
+      <figure><img src="assets/nail-bar.jpg" width="900" height="1074" loading="lazy" alt="The nail bar at sh-WOAH, two stations under an arched polish display"></figure>
+      <figure><img src="assets/pedicure-lounge.jpg" width="900" height="1140" loading="lazy" alt="The pedicure lounge at sh-WOAH, customers in cream armchairs against a green wall"></figure>
+      <figure><img src="assets/hair-result.jpg" width="900" height="880" loading="lazy" alt="A finished blow dry at sh-WOAH, layered and lifted"></figure>
+      <figure><img src="assets/lash-work.jpg" width="900" height="1170" loading="lazy" alt="Lash work in progress at sh-WOAH"></figure>
+    </div>
   </div>
 </section>
 
@@ -813,13 +858,24 @@ html.nojs .needs-js{display:none}
       <h2>Rated excellent across <i style="font-style:normal;color:var(--brand)">128</i> Google reviews.</h2>
       <p>They arrive in English, German, Dutch and Italian, mostly from people passing through Negombo.</p>
     </div>
+    <div class="rev-wall" id="revWall" data-sr hidden>
+      <aside class="rev-score">
+        <p class="word">Excellent</p>
+        <div class="stars" aria-hidden="true"></div>
+        <p class="count">Based on <b>128</b> reviews</p>
+        <p class="src">On Google, August 2026</p>
+      </aside>
+      <div>
+        <div class="rev-grid" id="revGrid"></div>
+        <p class="rev-note"><span id="revNote"></span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=sh-WOAH%20Beaute%20House%20Negombo" target="_blank" rel="noopener" style="color:var(--brand);text-decoration:underline;text-underline-offset:3px">Read all 128 on Google</a>.</p>
+      </div>
+    </div>
     <div data-sr>
-      <div class="rev-filters" id="revFilters" hidden></div>
-      <div class="rev-grid" id="revGrid" hidden></div>
       <div class="rev-fallback" id="revFallback">
         <p class="big">We would rather you read them where they live.</p>
         <p style="color:var(--muted)">Every review sits on our public Google listing, in the writer's own words and language. Nothing is edited before you see it.</p>
-        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo" target="_blank" rel="noopener">Read them on Google</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=sh-WOAH%20Beaute%20House%20Negombo" target="_blank" rel="noopener">Read them on Google</a>
       </div>
     </div>
   </div>
@@ -919,9 +975,26 @@ const CFG = {
 /* Reviews: verified only. Schema per the build brief. Empty until a confirmed
    subset is supplied (BB pulls by hand, Harini confirms). Live Google sync
    needs the Places API and a paid key: swap loadReviews() only. */
+/* Read off the salon's own published Google reviews widget, 26 August 2026.
+   ONLY COMPLETE SENTENCES are stored: the widget truncates longer reviews with
+   "Read more" and a half sentence must never be published as a whole one.
+   Translations are labelled as translations and the original always ships. */
 const REVIEWS = [
-  /* { id:'', author:'', rating:5, originalText:'', translatedText:'', language:'de',
-       serviceLine:'salon', staffMentioned:[], sourceUrl:'', reviewDate:'', verified:false } */
+  { id:'r1', author:'Moritz Hartkopf', rating:5, language:'de',
+    originalText:'Einer der besten Haarschnitte die ich je hatte zu einem sehr fairen Preis mit Kaffee inklusive.',
+    translatedText:'One of the best haircuts I have ever had, at a very fair price, with coffee included.',
+    serviceLine:'salon', staffMentioned:[], sourceUrl:'https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo',
+    reviewDate:'6 months ago', verified:true },
+  { id:'r2', author:'Beth', rating:5, language:'en',
+    originalText:'I would highly recommend heading to this nail salon if you are in Negombo.',
+    translatedText:'',
+    serviceLine:'salon', staffMentioned:[], sourceUrl:'https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo',
+    reviewDate:'6 months ago', verified:true },
+  { id:'r3', author:'Laurina de Vries', rating:5, language:'nl',
+    originalText:'Schone & nette salon. Heel precies en zorgvuldig, m’n gellak bleef lang goed',
+    translatedText:'Clean and pleasant salon. Very precise and careful, my gel polish lasted a long time.',
+    serviceLine:'salon', staffMentioned:[], sourceUrl:'https://www.google.com/maps/search/?api=1&query=sh-WOAH%20Beaute%20House%20Negombo',
+    reviewDate:'6 months ago', verified:true }
 ];
 const TEAM = [];        /* { id, name, role, specialities:[], photo, languages:[], bookableByName } */
 const CONCEPT = { flagged: true, products: [] };  /* { id, name, priceLKR:null, photo, description, verified:false } */
@@ -1075,28 +1148,40 @@ function sendBridal(btn){
    128 are on the page. A visitor's own language is ordered first.
    ===================================================================== */
 const LANG_NAME = { en:'English', de:'German', nl:'Dutch', it:'Italian' };
+const STAR = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.3 6.8.8-5 4.7 1.3 6.8L12 17.3 6 20.6l1.3-6.8-5-4.7 6.8-.8z"/></svg>';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
 function renderReviews(){
   let rows = REVIEWS.filter(r => r.verified);
-  if (DEV && !rows.length) {
-    rows = [
-      { author:'[Placeholder]', rating:5, originalText:'[Placeholder review. Not a real customer. Composition check only.]', translatedText:'', language:'en', serviceLine:'salon', staffMentioned:[], reviewDate:'' },
-      { author:'[Placeholder]', rating:5, originalText:'[Platzhalter. Kein echter Kunde.]', translatedText:'[Placeholder. Not a real customer.]', language:'de', serviceLine:'bridal', staffMentioned:[], reviewDate:'' },
-      { author:'[Placeholder]', rating:5, originalText:'[Placeholder review. Not a real customer.]', translatedText:'', language:'en', serviceLine:'salon', staffMentioned:[], reviewDate:'' }
-    ];
-  }
   if (MODE === 'salon' || MODE === 'bridal') rows = rows.filter(r => r.serviceLine === MODE);
-  const grid = document.getElementById('revGrid'), fb = document.getElementById('revFallback'),
-        filters = document.getElementById('revFilters');
-  if (!rows.length) { grid.hidden = true; filters.hidden = true; fb.hidden = false; return; }
+  const wall = document.getElementById('revWall'), grid = document.getElementById('revGrid'),
+        fb = document.getElementById('revFallback'), note = document.getElementById('revNote');
+  if (!rows.length) { wall.hidden = true; fb.hidden = false; return; }
+
+  /* a visitor meets their own language first */
   const mine = (navigator.language || 'en').slice(0,2);
-  rows.sort((a,b) => (b.language === mine) - (a.language === mine));
+  rows = rows.slice().sort((a,b) => (b.language === mine) - (a.language === mine));
+
+  wall.querySelector('.stars').innerHTML = STAR.repeat(5);
   grid.innerHTML = rows.map(r => `
     <figure class="rev-card">
-      <div class="r-meta"><span>${r.author}</span><span>${LANG_NAME[r.language] || r.language}${r.reviewDate ? ' · ' + r.reviewDate : ''}</span></div>
-      <blockquote class="r-text">${r.translatedText || r.originalText}</blockquote>
-      ${r.translatedText ? '<p class="r-orig">Original: ' + r.originalText + '</p><p class="r-orig">Translated from ' + (LANG_NAME[r.language] || r.language) + '.</p>' : ''}
+      <div class="r-top">
+        <span class="r-av" aria-hidden="true">${esc(r.author.trim()[0])}</span>
+        <span>
+          <span class="r-who">${esc(r.author)}</span>
+          <span class="r-when">${esc(r.reviewDate)}</span>
+        </span>
+      </div>
+      <div class="r-stars" role="img" aria-label="${r.rating} out of 5">${STAR.repeat(r.rating)}</div>
+      <blockquote class="r-text">${esc(r.translatedText || r.originalText)}</blockquote>
+      ${r.translatedText
+        ? `<figcaption class="r-orig">${esc(r.originalText)}</figcaption>
+           <span class="r-lang">Translated from ${LANG_NAME[r.language] || r.language}</span>`
+        : `<span class="r-lang">Written in ${LANG_NAME[r.language] || r.language}</span>`}
     </figure>`).join('');
-  grid.hidden = false; fb.hidden = true; filters.hidden = true;
+
+  note.textContent = rows.length + ' of the 128 reviews on our Google listing, shown unedited. ';
+  wall.hidden = false; fb.hidden = true;
 }
 
 /* Concept store dev preview: structure only, flagged, no public shopfront. */
