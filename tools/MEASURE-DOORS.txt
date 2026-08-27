@@ -1,0 +1,16 @@
+DOOR MEASUREMENT for exec-8196ba91-2937-48e8-8ed5-2441fa11f14b.png (1551x1014)
+The three .hot-* rules in index.html still hold the OLD coordinates.
+
+1. Crop each doorway region and LOOK at it (adjust offsets until the crop
+   holds exactly one sign plus its door, edge to edge):
+     sips -c <h> <w> --cropOffset <top> <left> "assets/src2/exec-8196ba91-2937-48e8-8ed5-2441fa11f14b.png" --out /tmp/door.png
+2. For each door convert edges to percentages of 1551x1014:
+     left% = left/1551*100   top% = top/1014*100
+     width% = w/1551*100     height% = h/1014*100
+3. Update the three rules in index.html (.hot-bridal, .hot-concept, .hot-salon)
+   and keep the label text matched to the real left-to-right order.
+4. node tools/shot-hero.mjs and LOOK: every label on its own door at 1440,
+   1280 and 768.
+5. If the new shot is front-on, all three doors may fit a phone: try enabling
+   the hotspots under 900px with a shorter hero band before falling back to
+   the bottom list.
