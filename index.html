@@ -38,18 +38,27 @@
 -->
 <title>sh-WOAH Beaute House | Salon, Bridal and Concept Store in Negombo</title>
 <meta name="description" content="Skin, hair, nails, bridal and a concept store in Negombo. Rated excellent across 128 Google reviews. Ask us anything on WhatsApp.">
-<link rel="canonical" href="https://shwoah.com/">
-<meta name="robots" content="index,follow">
+<!-- PREVIEW DEPLOY. This is a client preview on GitHub Pages while shwoah.com still
+     runs the old site. noindex keeps it out of Google so it never competes with the
+     client's live site, and canonical points at where this page ACTUALLY is, never at
+     a domain carrying different content. ON MOVING TO THE REAL DOMAIN, flip both:
+     canonical -> https://shwoah.com/ and robots -> index,follow. Also update og:url,
+     og:image and sitemap.xml in the same pass. -->
+<link rel="canonical" href="https://businessboosterlk.github.io/shwoah/">
+<meta name="robots" content="noindex,nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="sh-WOAH Beaute House">
 <meta property="og:description" content="Skin, hair, nails, bridal and a concept store in Negombo.">
-<meta property="og:url" content="https://shwoah.com/">
-<meta property="og:image" content="https://shwoah.com/assets/og.png">
+<meta property="og:url" content="https://businessboosterlk.github.io/shwoah/">
+<meta property="og:image" content="https://businessboosterlk.github.io/shwoah/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#221d16">
 <!-- INTERIM favicon: typographic monogram, flagged in CONTENT-REQUIRED.md until real logo files arrive -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23221d16'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23c8a878' text-anchor='middle'%3EsW%3C/text%3E%3C/svg%3E">
 <!-- GSC verification slot: fill at launch, per bb-web-seo-foundation -->
+<link rel="preload" as="image" type="image/webp"
+  imagesrcset="assets/hero/exterior-480.webp 480w, assets/hero/exterior-640.webp 640w, assets/hero/exterior-900.webp 900w, assets/hero/exterior-1200.webp 1200w, assets/hero/exterior-1551.webp 1551w"
+  imagesizes="100vw" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
@@ -193,6 +202,121 @@ body.drawer-lock{position:fixed;width:100%;overflow:hidden}
 .ph-cap{display:none;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);
   background:var(--amber-soft);border:1px dashed var(--amber);border-radius:var(--r-sm);padding:4px 8px}
 body.dev .ph-cap{display:inline-block}
+
+
+/* ======= HERO: the real building is the navigation =======
+   The photograph carries three actual storefronts. Each one is a link. The frame
+   below reproduces object-fit:cover while keeping a coordinate box locked to the
+   image, so a hotspot placed at 33% stays on the Bridal door at every width.
+   Phones crop far too hard for three doors to read, so under 900px the hotspots
+   step aside for a bottom treatment, which is the same three choices. */
+.hero{position:relative;height:100svh;min-height:540px;overflow:hidden;background:var(--brand-ink);
+  /* the sticky header floats ON the photograph, so pull the hero up under it */
+  margin-top:calc(-1 * var(--nav-h))}
+.hero-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  aspect-ratio:1551/1014;width:max(100%,calc(100svh * 1.5296))}
+.hero-frame img{width:100%;height:100%;object-fit:cover;display:block}
+/* Readability only. The building must stay legible, so this stays light. */
+.hero-wash{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,14,8,.46) 0,rgba(20,14,8,.10) 24%,rgba(20,14,8,0) 46%)}
+.hero-ask{position:absolute;z-index:5;left:0;right:0;text-align:center;
+  top:calc(var(--nav-h) + env(safe-area-inset-top) + 14px);
+  font-size:var(--fs-xs);font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(248,244,236,.9);text-shadow:0 1px 14px rgba(18,12,6,.5);padding:0 var(--gutter)}
+
+.hot{position:absolute;z-index:6;border-radius:12px;display:block;
+  -webkit-tap-highlight-color:transparent}
+.hot::before{content:"";position:absolute;inset:-2% -6%;border-radius:16px;
+  background:radial-gradient(120% 92% at 50% 62%,rgba(255,246,229,.34),rgba(255,246,229,0) 72%);
+  opacity:0;transition:opacity .24s var(--ease)}
+.hot::after{content:"";position:absolute;inset:0;border-radius:12px;
+  box-shadow:inset 0 0 0 1px rgba(255,247,233,.5);
+  opacity:0;transition:opacity .24s var(--ease)}
+.hot:hover::before,.hot:focus-visible::before,.hot:hover::after,.hot:focus-visible::after{opacity:1}
+.hot:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.hot-salon{left:68.5%;top:24%;width:18%;height:58%}
+.hot-concept{left:45%;top:32%;width:9.5%;height:43%}
+.hot-bridal{left:33%;top:41%;width:7.5%;height:30%}
+.hot-label::before{content:"";position:absolute;left:50%;top:50%;z-index:-1;pointer-events:none;
+  transform:translate(-50%,-50%);width:calc(100% + 54px);height:calc(100% + 30px);
+  background:radial-gradient(closest-side,rgba(16,11,5,.62),rgba(16,11,5,0))}
+.hot-label{position:absolute;left:50%;top:calc(100% + 14px);transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:3px;white-space:nowrap;
+  min-width:44px;min-height:44px;justify-content:center}
+.hot-label .hl-n{font-family:var(--font-display);font-weight:600;
+  font-size:clamp(17px,1.5vw,23px);color:#fdfaf3;
+  text-shadow:0 1px 16px rgba(16,11,5,.72),0 0 3px rgba(16,11,5,.4)}
+.hot-label .hl-s{font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(250,245,236,.74);text-shadow:0 1px 12px rgba(16,11,5,.8);
+  opacity:0;transform:translateY(-3px);transition:opacity .26s var(--ease),transform .26s var(--ease)}
+.hot-label .hl-i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(252,247,238,.6);background:rgba(20,14,7,.42);margin-bottom:3px}
+.hot-label .hl-i svg{width:19px;height:19px;color:#fdfaf3}
+.hot:hover .hl-i,.hot:focus-visible .hl-i{border-color:#fff;background:rgba(20,14,7,.6)}
+.hero-choices .hc-i{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(248,244,236,.34)}
+.hero-choices .hc-i svg{width:17px;height:17px;color:#e8dcc4}
+.hero-choices a{gap:12px}
+.hero-choices a>span:nth-child(2){flex:1;min-width:0}
+.hot-label .hl-r{width:0;height:1px;background:rgba(252,247,238,.85);
+  transition:width .28s var(--ease);margin-top:1px}
+.hot:hover .hl-s,.hot:focus-visible .hl-s{opacity:1;transform:none}
+.hot:hover .hl-r,.hot:focus-visible .hl-r{width:30px}
+
+/* Phone and small tablet: the same three choices, thumb height, over the photo. */
+.hero-choices{display:none;position:absolute;left:0;right:0;bottom:0;z-index:6;
+  padding:var(--s-10) var(--gutter) calc(var(--s-4) + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(20,14,8,0),rgba(20,14,8,.74) 42%,rgba(20,14,8,.93));
+  gap:8px}
+.hero-choices a{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-height:58px;padding:13px 18px;border-radius:12px;color:#f8f4ec;
+  background:rgba(32,23,14,.62);border:1px solid rgba(248,244,236,.24)}
+.hero-choices a:active{background:rgba(32,23,14,.85)}
+.hero-choices .hc-n{font-family:var(--font-display);font-weight:600;font-size:var(--fs-md)}
+.hero-choices .hc-s{display:block;font-size:var(--fs-2xs);letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(248,244,236,.66);margin-top:2px}
+.hero-choices svg{width:18px;height:18px;flex:none;color:rgba(248,244,236,.8)}
+body.at-hero .stickbar{display:none}
+@media(max-width:900px){
+  .hot{display:none}
+  .hero-choices{display:grid}
+  .hero-frame{position:absolute;inset:0;top:0;left:0;transform:none;width:100%;height:100%;aspect-ratio:auto}
+  .hero-frame img{object-position:68% center}
+  .hero-ask{top:calc(var(--nav-h) + env(safe-area-inset-top) + 8px)}
+}
+/* transparent header while the photograph is behind it */
+.nav.onhero{background:transparent;backdrop-filter:none;border-color:transparent;box-shadow:none}
+.nav.onhero .brand .bt,.nav.onhero .nav-links a,.nav.onhero .nav-links button{color:#f8f4ec}
+.nav.onhero .brand .bt small{color:rgba(248,244,236,.7)}
+.nav.onhero .hamb{color:#f8f4ec}
+.nav.onhero .brand .bm{background:rgba(248,244,236,.16);color:#f8f4ec}
+.nav.onhero .nav-links a:hover,.nav.onhero .nav-links button:hover{color:#fff}
+
+/* Entrance: photograph, then the words, then the doors. Under 1.2s, and it never
+   gates interaction because every element is clickable from the first frame. */
+@keyframes heroIn{from{opacity:0}to{opacity:1}}
+@keyframes heroRise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes heroRiseC{from{opacity:0;transform:translateX(-50%) translateY(9px)}
+  to{opacity:1;transform:translateX(-50%)}}
+.hero-frame{animation:heroIn .62s var(--ease) both}
+.hero-ask{animation:heroRise .5s var(--ease) .42s both}
+.hot-label{animation:heroRiseC .46s var(--ease) both}
+.hot-salon .hot-label{animation-delay:.62s}
+.hot-concept .hot-label{animation-delay:.72s}
+.hot-bridal .hot-label{animation-delay:.82s}
+.hero-choices a:nth-child(1){animation:heroRise .46s var(--ease) .6s both}
+.hero-choices a:nth-child(2){animation:heroRise .46s var(--ease) .7s both}
+.hero-choices a:nth-child(3){animation:heroRise .46s var(--ease) .8s both}
+@media(max-width:400px){
+  /* white-space:nowrap plus 32px padding made 'Send my date to the salon' 301px
+     wide, which forced the whole layout viewport to 346px on a 320px phone */
+  .btn{white-space:normal;text-align:center;padding-left:18px;padding-right:18px}
+  .btn-lg{padding-left:20px;padding-right:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-frame,.hero-ask,.hot-label,.hero-choices a{animation:none}
+  .hot-label .hl-s{opacity:1;transform:none}
+}
 
 /* ======= FIRST SCREEN ======= */
 .door-hero{padding:calc(var(--s-10)) 0 var(--s-16)}
@@ -449,9 +573,9 @@ html.nojs .needs-js{display:none}
       <span class="bt">sh-WOAH<small>Beaute House · Negombo</small></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <button type="button" data-door="salon" onclick="pickDoor('salon')">The salon</button>
-      <button type="button" data-door="bridal" onclick="pickDoor('bridal')">Bridal</button>
-      <button type="button" data-door="concept" onclick="pickDoor('concept')">The store</button>
+      <a href="#salon" data-door="salon">The salon</a>
+      <a href="#bridal" data-door="bridal">Bridal</a>
+      <a href="#concept-store" data-door="concept">The store</a>
       <a href="#find">Find us</a>
     </nav>
     <button class="btn btn-primary" type="button" onclick="waSend('General','General question',[],this)">WhatsApp us</button>
@@ -463,67 +587,47 @@ html.nojs .needs-js{display:none}
 <div class="scrim" id="scrim" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" inert>
   <nav>
-    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('salon')">The salon</button>
-    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('bridal')">Bridal</button>
-    <button type="button" class="dlink" onclick="closeDrawer();pickDoor('concept')">The store</button>
-    <button type="button" class="dlink" onclick="closeDrawer();goTool('all','about')">About</button>
+    <a class="dlink" href="#salon" onclick="closeDrawer()">The salon</a>
+    <a class="dlink" href="#bridal" onclick="closeDrawer()">Bridal</a>
+    <a class="dlink" href="#concept-store" onclick="closeDrawer()">The store</a>
+    <button type="button" class="dlink" onclick="closeDrawer();goSection('#about')">About</button>
     <a class="dlink" href="#find" onclick="closeDrawer()">Find us</a>
   </nav>
   <button class="btn btn-primary" type="button" onclick="closeDrawer();waSend('General','General question',[],this)">WhatsApp us</button>
 </aside>
 
-<!-- ======= FIRST SCREEN ======= -->
-<section class="door-hero" id="top">
-  <div class="wrap">
-    <p class="idline">sh-WOAH Beaute House · Negombo</p>
-    <h1 class="kine" data-split>What would you like from us?</h1>
-    <p class="sub">Skin, hair, nails, bridal and a small concept store. Pick a door and the page becomes yours.</p>
-
-    <!-- The editorial mosaic. Tiles are designed placeholder panels until real
-         photography is confirmed (CONTENT-REQUIRED.md). Composition: salon
-         cluster left, the product alone centre, bridal right. -->
-    <div class="mosaic" role="group" aria-label="Choose what you came for">
-      <button type="button" class="tile tile-s1 tile-photo" data-door="salon" onclick="pickDoor('salon')">
-        <img src="assets/manicure-bar.jpg" width="1200" height="1463" alt="The manicure bar at sh-WOAH, four customers having their nails done">
-        <span class="t-door">The salon</span>
-        <span class="t-line">Hair, skin and nails, this week.</span>
-      </button>
-      <button type="button" class="tile tile-s2 tile-photo" data-door="salon" onclick="pickDoor('salon')">
-        <img src="assets/salon-room.jpg" width="900" height="1176" alt="The salon floor at sh-WOAH in Negombo">
-        <span class="t-door">The salon</span>
-        <span class="t-line">The room itself.</span>
-      </button>
-      <button type="button" class="tile tile-c" data-door="concept" onclick="pickDoor('concept')">
-        <svg class="t-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="ph-cap">Photo slot: the product, alone</span>
-        <span class="t-door">The concept store</span>
-        <span class="t-line">Take the result home.</span>
-      </button>
-      <!-- Bridal tiles carry NO photograph: every image supplied so far is salon
-           work, and a manicure under a "Bridal" label claims a portfolio that
-           has not been supplied. Designed tiles until real bridal work arrives. -->
-      <button type="button" class="tile tile-b1" data-door="bridal" onclick="pickDoor('bridal')">
-        <span class="ph-cap">Photo slot: real bridal work</span>
-        <span class="t-door">Bridal</span>
-        <span class="t-line">The details.</span>
-      </button>
-      <button type="button" class="tile tile-b2" data-door="bridal" onclick="pickDoor('bridal')">
-        <svg class="t-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="14" r="6"/><path d="M9 8l1.5-4h3L15 8"/></svg>
-        <span class="ph-cap">Photo slot: the one photographed day</span>
-        <span class="t-door">Bridal</span>
-        <span class="t-line">The one photographed day.</span>
-      </button>
-    </div>
-    <div class="notsure">
-      <button type="button" onclick="pickDoor('all')">Not sure? Have a look around first.</button>
-    </div>
+<!-- ======= HERO: the three real doors ======= -->
+<section class="hero" id="top">
+  <div class="hero-frame">
+    <picture>
+      <source type="image/webp" sizes="100vw" srcset="assets/hero/exterior-480.webp 480w, assets/hero/exterior-640.webp 640w, assets/hero/exterior-900.webp 900w, assets/hero/exterior-1200.webp 1200w, assets/hero/exterior-1551.webp 1551w">
+      <img src="assets/hero/exterior-1200.jpg" width="1551" height="1014" fetchpriority="high" decoding="async"
+           sizes="100vw"
+           srcset="assets/hero/exterior-480.jpg 480w, assets/hero/exterior-640.jpg 640w, assets/hero/exterior-900.jpg 900w, assets/hero/exterior-1200.jpg 1200w, assets/hero/exterior-1551.jpg 1551w"
+           alt="The sh-WOAH arcade in Negombo. Three signed entrances along one colonnade: Bridal, Concept Store and Nails and Hair.">
+    </picture>
+    <div class="hero-wash"></div>
+    <a class="hot hot-salon" href="#salon" data-door="salon">
+      <span class="hot-label"><span class="hl-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg></span><span class="hl-n">Salon</span><span class="hl-s">Hair, skin and nails</span><span class="hl-r"></span></span>
+    </a>
+    <a class="hot hot-concept" href="#concept-store" data-door="concept">
+      <span class="hot-label"><span class="hl-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span><span class="hl-n">Concept store</span><span class="hl-s">Take the result home</span><span class="hl-r"></span></span>
+    </a>
+    <a class="hot hot-bridal" href="#bridal" data-door="bridal">
+      <span class="hot-label"><span class="hl-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="14" r="6"/><path d="M9 8l1.5-4h3L15 8"/></svg></span><span class="hl-n">Bridal</span><span class="hl-s">The photographed day</span><span class="hl-r"></span></span>
+    </a>
   </div>
+  <p class="hero-ask">Choose your sh-WOAH experience</p>
+  <nav class="hero-choices" aria-label="Choose a service">
+    <a href="#salon" data-door="salon"><span class="hc-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg></span><span><span class="hc-n">Salon</span><span class="hc-s">Hair, skin and nails</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></a>
+    <a href="#bridal" data-door="bridal"><span class="hc-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="14" r="6"/><path d="M9 8l1.5-4h3L15 8"/></svg></span><span><span class="hc-n">Bridal</span><span class="hc-s">The photographed day</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></a>
+    <a href="#concept-store" data-door="concept"><span class="hc-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span><span><span class="hc-n">Concept store</span><span class="hc-s">Take the result home</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></a>
+  </nav>
 </section>
-
 <div id="journey" aria-hidden="true"></div>
 
 <!-- ======= OVERVIEW (default, and the Not sure route) ======= -->
-<section class="section" data-modes="all" id="overview">
+<section class="section" id="overview">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">The house</span>
@@ -535,19 +639,19 @@ html.nojs .needs-js{display:none}
       <figcaption>Banyan Complex, Heritance, Negombo. Each door is signed.</figcaption>
     </figure>
     <div class="lines" data-sr>
-      <button type="button" class="line-card" onclick="pickDoor('salon')">
+      <button type="button" class="line-card" href="#salon">
         <span class="eyebrow">The salon</span>
         <h3>Hair, skin and nails.</h3>
         <p>The weekly habit and the visitor's hour. Book a chair on WhatsApp.</p>
         <span class="go">Book a chair <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
       </button>
-      <button type="button" class="line-card" onclick="pickDoor('bridal')">
+      <button type="button" class="line-card" href="#bridal">
         <span class="eyebrow">Bridal</span>
         <h3>The one photographed day.</h3>
         <p>Bridal runs on one date. Send yours first and plan the rest with the salon.</p>
         <span class="go">Check a date <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
       </button>
-      <button type="button" class="line-card" onclick="pickDoor('concept')">
+      <button type="button" class="line-card" href="#concept-store">
         <span class="eyebrow">The concept store</span>
         <h3>Take the result home.</h3>
         <p>The one part of sh-WOAH that leaves with you.</p>
@@ -558,24 +662,24 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= QUICK TOOLS (overview) ======= -->
-<section class="section" data-modes="all" id="tools" style="padding-top:0">
+<section class="section" id="tools" style="padding-top:0">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Shortcuts</span>
       <h2>Know what you need already?</h2>
     </div>
     <div class="tools-card" data-sr>
-      <button type="button" class="tool-row" onclick="goTool('salon','book')">
+      <button type="button" class="tool-row" onclick="goSection('#book')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
         <span><span class="tr-name">Book a chair</span><span class="tr-sub" style="display:block">Hair, nails or skin, on WhatsApp in two minutes</span></span>
         <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
       </button>
-      <button type="button" class="tool-row" onclick="goTool('bridal','bridal-date')">
+      <button type="button" class="tool-row" onclick="goSection('#bridal-date')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
         <span><span class="tr-name">Check a wedding date</span><span class="tr-sub" style="display:block">Send the date first. The salon confirms it</span></span>
         <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
       </button>
-      <button type="button" class="tool-row" onclick="goTool('salon','leaving')">
+      <button type="button" class="tool-row" onclick="goSection('#leaving')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
         <span><span class="tr-name">Leaving Negombo soon?</span><span class="tr-sub" style="display:block">Flying out and want something done before you go</span></span>
         <svg class="tr-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
@@ -585,7 +689,7 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= ABOUT (overview) ======= -->
-<section class="section scene-dark" data-modes="all" id="about">
+<section class="section scene-dark" id="about">
   <div class="wrap about-grid">
     <div data-sr>
       <span class="eyebrow">About</span>
@@ -602,11 +706,11 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= SALON MODE ======= -->
-<section class="section scene-dark" data-modes="salon" id="salon-head">
+<section class="section scene-dark" id="salon">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">The salon</span>
-      <h2>Hair, skin and nails, done properly.</h2>
+      <h2 tabindex="-1">Hair, skin and nails, done properly.</h2>
       <p>Tell the desk what you need on WhatsApp. They answer in opening hours, daily 10:00 to 20:00.</p>
     </div>
     <div class="svc" data-sr>
@@ -630,7 +734,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="salon" id="work">
+<section class="section" id="work">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">The work</span>
@@ -645,7 +749,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="salon" id="book">
+<section class="section" id="book">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Book a chair</span>
@@ -707,7 +811,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="salon" id="prices">
+<section class="section" id="prices">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Prices</span>
@@ -735,7 +839,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="salon" id="leaving">
+<section class="section" id="leaving">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Flying out</span>
@@ -780,11 +884,11 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= BRIDAL MODE ======= -->
-<section class="section scene-dark" data-modes="bridal" id="bridal-head">
+<section class="section scene-dark" id="bridal">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Bridal</span>
-      <h2>The one photographed day.</h2>
+      <h2 tabindex="-1">The one photographed day.</h2>
       <p>Bridal runs on one date. Send yours first, before anything else is decided.</p>
     </div>
     <div class="steps" data-sr>
@@ -795,7 +899,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="bridal" id="bridal-date">
+<section class="section" id="bridal-date">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Your date</span>
@@ -850,7 +954,7 @@ html.nojs .needs-js{display:none}
   </div>
 </section>
 
-<section class="section" data-modes="bridal" id="bridal-packages">
+<section class="section" id="bridal-packages">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">Packages</span>
@@ -878,11 +982,11 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= CONCEPT MODE ======= -->
-<section class="section scene-dark" data-modes="concept" id="concept-head">
+<section class="section scene-dark" id="concept-store">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">The concept store</span>
-      <h2>Take the result home.</h2>
+      <h2 tabindex="-1">Take the result home.</h2>
       <p>The store is the part of sh-WOAH that leaves with you. What is on the shelf changes, so ask.</p>
     </div>
     <div data-sr>
@@ -898,7 +1002,7 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= REVIEWS (all, salon, bridal) ======= -->
-<section class="section" data-modes="all salon bridal" id="reviews">
+<section class="section" id="reviews">
   <div class="wrap">
     <div class="sect-head" data-sr>
       <span class="eyebrow">What customers write</span>
@@ -929,7 +1033,7 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= FIND US + FAQ (every mode) ======= -->
-<section class="section scene-dark" data-modes="all salon bridal concept" id="find">
+<section class="section scene-dark" id="find">
   <div class="wrap loc-grid">
     <div data-sr>
       <span class="eyebrow">Find us</span>
@@ -958,7 +1062,7 @@ html.nojs .needs-js{display:none}
 </section>
 
 <!-- ======= CTA BAND (overview) ======= -->
-<section class="section" data-modes="all" id="ask">
+<section class="section" id="ask">
   <div class="wrap">
     <div class="band" data-sr>
       <div>
@@ -983,10 +1087,10 @@ html.nojs .needs-js{display:none}
         <p class="about-f">A beauty house in Negombo. Skin, nails, hair, bridal and the concept store.</p>
       </div>
       <div><h4>The doors</h4>
-        <button type="button" class="flink" onclick="pickDoor('salon')">The salon</button>
-        <button type="button" class="flink" onclick="pickDoor('bridal')">Bridal</button>
-        <button type="button" class="flink" onclick="pickDoor('concept')">The concept store</button>
-        <button type="button" class="flink" onclick="goTool('all','about')">About the house</button>
+        <a href="#salon">The salon</a>
+        <a href="#bridal">Bridal</a>
+        <a href="#concept-store">The concept store</a>
+        <button type="button" class="flink" onclick="goSection('#about')">About the house</button>
       </div>
       <div><h4>Contact</h4>
         <a href="tel:+94770754224">+94 77 075 4224</a>
@@ -1065,47 +1169,64 @@ if (DEV) {
   document.querySelectorAll('[data-prod-only]').forEach(el => el.hidden = true);
 }
 
+/* ONE PAGE, THREE ANCHORS. Every section is always in the document; a door is a
+   real link to it, so a pasted #bridal opens at bridal and the back button works.
+   MODE is now only used to label a WhatsApp enquiry, and is set by whichever
+   section the reader is actually looking at. */
 const VALID = ['salon','bridal','concept'];
 const DOOR_LABEL = { salon:'Salon', bridal:'Bridal', concept:'Concept', all:'General' };
+const SECTION_OF = { salon:'salon', bridal:'bridal', concept:'concept-store' };
 let MODE = 'all';
 
-function setMode(m, scroll){
-  MODE = VALID.includes(m) ? m : 'all';
-  document.body.dataset.mode = MODE;
-  document.querySelectorAll('[data-modes]').forEach(s => {
-    s.hidden = !s.dataset.modes.split(' ').includes(MODE);
-  });
-  document.querySelectorAll('[data-door]').forEach(b =>
-    b.setAttribute('aria-pressed', String(b.dataset.door === MODE)));
-  const q = new URLSearchParams(location.search);
-  if (MODE === 'all') q.delete('service'); else q.set('service', MODE);
-  const qs = q.toString();
-  history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
-  const titles = {
-    all:'sh-WOAH Beaute House | Salon, Bridal and Concept Store in Negombo',
-    salon:'The salon | sh-WOAH Beaute House, Negombo',
-    bridal:'Bridal | sh-WOAH Beaute House, Negombo',
-    concept:'The concept store | sh-WOAH Beaute House, Negombo'
-  };
-  document.title = titles[MODE];
-  const stick = document.getElementById('stickCta');
-  stick.textContent = MODE === 'bridal' ? 'Check my date' : 'WhatsApp';
-  if (scroll) document.getElementById('overview').parentNode
-    .querySelector(MODE === 'all' ? '#overview' : '[data-modes="' + MODE + '"]')
-    .scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block:'start' });
-  revealVisible();
+function goSection(hash, push){
+  const el = document.querySelector(hash);
+  if (!el) return;
+  el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block:'start' });
+  if (push !== false && location.hash !== hash) history.pushState(null, '', hash);
+  const h = el.querySelector('h2, h3');
+  if (h) { if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex','-1'); h.focus({ preventScroll:true }); }
 }
-function pickDoor(m){ setMode(m, true); }
-function goTool(mode, id){
-  setMode(mode, false);
-  setTimeout(() => { const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block:'start' }); }, 0);
+/* Doors are anchors, so a middle click or a copied link still behaves. We only
+   intercept the plain left click, to add smooth scroll and move focus. */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+  const hash = a.getAttribute('href');
+  if (hash === '#' || !document.querySelector(hash)) return;
+  e.preventDefault();
+  goSection(hash);
+});
+window.addEventListener('popstate', () => { if (location.hash) goSection(location.hash, false); });
+
+/* which door the reader is in, for the enquiry tag and the sticky button */
+if ('IntersectionObserver' in window) {
+  const watch = new IntersectionObserver(es => {
+    es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const found = VALID.find(v => SECTION_OF[v] === en.target.id);
+      MODE = found || 'all';
+      const stick = document.getElementById('stickCta');
+      if (stick) stick.textContent = MODE === 'bridal' ? 'Check my date' : 'WhatsApp';
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  ['salon','bridal','concept-store','overview','about','reviews','find']
+    .forEach(id => { const el = document.getElementById(id); if (el) watch.observe(el); });
 }
 function stickAction(btn){
-  if (MODE === 'bridal') { document.getElementById('bridal-date').scrollIntoView({behavior:REDUCE?'auto':'smooth'}); return; }
+  if (MODE === 'bridal') { goSection('#bridal-date'); return; }
   waSend(DOOR_LABEL[MODE], 'Quick message', [], btn);
 }
-setMode(Q.get('service') || 'all', false);
+/* transparent header only while the photograph is behind it */
+const heroEl = document.getElementById('top');
+function navSkin(){
+  if (!heroEl) return;
+  const on = scrollY < heroEl.offsetHeight - 90;
+  nav.classList.toggle('onhero', on);
+  document.body.classList.toggle('at-hero', on);
+}
+addEventListener('scroll', () => requestAnimationFrame(navSkin), { passive:true });
+addEventListener('resize', navSkin);
+
 
 /* =====================================================================
    The tag rail. Every route to WhatsApp opens with a line the desk can
@@ -1350,6 +1471,19 @@ if (!REDUCE && !CAPTURE && 'IntersectionObserver' in window) {
   revealVisible();
 }
 
+navSkin();
+/* Arriving on a link should LAND, not animate, and it has to wait for the
+   images or the offset is measured against a shorter page and misses. */
+if (location.hash && document.querySelector(location.hash)) {
+  addEventListener('load', () => {
+    const el = document.querySelector(location.hash);
+    if (!el) return;
+    el.scrollIntoView({ behavior:'auto', block:'start' });
+    const h = el.querySelector('h2, h3');
+    if (h) { if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex','-1'); h.focus({ preventScroll:true }); }
+    navSkin();
+  });
+}
 renderReviews();
 renderConcept();
 </script>

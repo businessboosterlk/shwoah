@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- PREVIEW: points at the GitHub Pages preview while shwoah.com runs the old site.
+     Swap the loc to https://shwoah.com/ when the site moves to the real domain. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://shwoah.com/</loc>
-    <lastmod>2026-08-26</lastmod>
+    <loc>https://businessboosterlk.github.io/shwoah/</loc>
+    <lastmod>2026-08-27</lastmod>
   </url>
 </urlset>

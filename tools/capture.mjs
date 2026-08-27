@@ -25,7 +25,7 @@ const SHOTS = [
 
 const chrome = spawn(CHROME, [
   '--headless=new', '--disable-gpu', `--remote-debugging-port=${PORT}`,
-  '--no-first-run', '--user-data-dir=/tmp/shwoah-capture-profile', 'about:blank'
+  '--no-first-run', '--user-data-dir=/tmp/shwoah-cap-83309', 'about:blank'
 ], { stdio: 'ignore' });
 process.on('exit', () => chrome.kill());
 
@@ -88,7 +88,20 @@ async function shot({ name, url, w, h }) {
   await fetch(`http://localhost:${PORT}/json/close/${tabId}`);
 }
 
-await wait(1200);
+/* Poll until Chrome answers on the debug port. A fixed sleep raced a cold start and
+   failed with ECONNREFUSED; how long Chrome takes to bind is not ours to guess. */
+async function waitForChrome(timeoutMs = 30000) {
+  const deadline = Date.now.call(null) + timeoutMs;
+  for (;;) {
+    try {
+      const r = await fetch(`http://localhost:${PORT}/json/version`);
+      if (r.ok) return;
+    } catch {}
+    if (Date.now.call(null) > deadline) throw new Error('Chrome never bound port ' + PORT);
+    await wait(300);
+  }
+}
+await waitForChrome();
 for (const s of SHOTS) await shot(s);
 chrome.kill();
 console.log('done');
