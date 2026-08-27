@@ -1475,17 +1475,23 @@ navSkin();
 /* Arriving on a link should LAND, not animate, and it has to wait for the
    images or the offset is measured against a shorter page and misses. */
 if (location.hash && document.querySelector(location.hash)) {
-  /* Chrome restores scroll AFTER load, which undid the landing, so take manual
-     control and place the page on the next frame once layout has settled. */
+  /* Landing on a deep link has three enemies: Chrome's own scroll restoration,
+     a load event that may already have fired, and images that settle late and
+     move the target. So take manual control and place the page at all three
+     moments rather than trusting any one of them. */
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  addEventListener('load', () => {
-    const el = document.querySelector(location.hash);
+  const landOnHash = () => {
+    const el = location.hash && document.querySelector(location.hash);
     if (!el) return;
-    requestAnimationFrame(() => el.scrollIntoView({ behavior:'auto', block:'start' }));
+    el.scrollIntoView({ behavior:'auto', block:'start' });
     const h = el.querySelector('h2, h3');
     if (h) { if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex','-1'); h.focus({ preventScroll:true }); }
     navSkin();
-  });
+  };
+  landOnHash();
+  if (document.readyState === 'complete') requestAnimationFrame(landOnHash);
+  else addEventListener('load', () => requestAnimationFrame(landOnHash));
+  setTimeout(landOnHash, 400);
 }
 renderReviews();
 renderConcept();
