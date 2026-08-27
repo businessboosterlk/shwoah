@@ -46,9 +46,20 @@ Eleven images arrived from Thulaib (`assets/src/IMG_8123.jpg` to `IMG_8133.jpg`,
 - `IMG_8131` hair result (face) · `IMG_8132` styled portrait (face) ·
   `IMG_8133` hair and makeup result (face)
 
-**Still wanted:** full-resolution originals of all of the above (screenshots cap
-the quality), one true product shot for the concept tile, a confirmed bridal
-set and staff portraits for the team section.
+**Still wanted, and item 6 is now the biggest visual gap:**
+1. **A straight-on photograph of the arcade showing all three signed doors.**
+   The hero uses the real building and the doors are the navigation, but the only
+   angle we hold is a perspective view down the colonnade, so Bridal sits small
+   and far left. A front-on frame taken from across the courtyard, in daylight,
+   would let all three doors read at once. This is a two minute phone job for
+   anyone standing there. **It must be a real photograph. A generated or edited
+   image of a real shopfront is not an option: customers navigate by it, and the
+   consultancy report's own slide 9 names "bridal advertised with borrowed
+   images" as the fault of the salons sh-WOAH is beating.**
+2. A higher resolution original of the exterior. Ours is 1551px wide, which is
+   sharp at 1x on a laptop and soft on a retina desktop for a full bleed hero.
+3. One true product shot for the concept store.
+4. A confirmed bridal set, and staff portraits for the team section.
 
 ## Reviews on the site (item 5), added 26 August 2026
 
