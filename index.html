@@ -278,16 +278,32 @@ body.dev .ph-cap{display:inline-block}
 .hero-choices svg{width:18px;height:18px;flex:none;color:rgba(248,244,236,.8)}
 body.at-hero .stickbar{display:none}
 @media(max-width:900px){
+  /* A 0.46 portrait screen cannot cover-crop a 1.53 landscape building and
+     still show three doors, so on a phone the photograph is CONTAINED: the
+     whole shopfront reads as one band, all three signed doors visible, on the
+     espresso ground. The thumb-height rows below stay the navigation, because
+     labels under three doors at 390px collide with each other. */
   .hot{display:none}
-  .hero-choices{display:grid}
-  .hero-frame{position:absolute;inset:0;top:0;left:0;transform:none;width:100%;height:100%;aspect-ratio:auto}
-  .hero-frame img{object-position:68% center}
-  .hero-ask{top:calc(var(--nav-h) + env(safe-area-inset-top) + 8px)}
+  /* stack and centre the group, so the band and the choices read as one
+     composition instead of leaving a dead gap between them */
+  .hero{display:flex;flex-direction:column;justify-content:center;gap:var(--s-10);
+    padding:calc(var(--nav-h) + env(safe-area-inset-top) + 40px) 0
+            calc(var(--s-6) + env(safe-area-inset-bottom))}
+  .hero-choices{position:relative;bottom:auto;display:grid;background:none;
+    padding:0 var(--gutter)}
+  .hero-frame{position:relative;left:auto;top:auto;transform:none;width:100%;
+    aspect-ratio:1551/1014}
+  .hero-frame img{object-fit:contain;object-position:center}
+  .hero-wash{background:linear-gradient(180deg,rgba(20,14,8,.34) 0,rgba(20,14,8,0) 22%)}
+  .hero-ask{top:calc(var(--nav-h) + env(safe-area-inset-top) + 12px)}
 }
+
 /* transparent header while the photograph is behind it */
 .nav.onhero{background:transparent;backdrop-filter:none;border-color:transparent;box-shadow:none}
 .nav.onhero .brand .bt,.nav.onhero .nav-links a,.nav.onhero .nav-links button{color:#f8f4ec}
-.nav.onhero .brand .bt small{color:rgba(248,244,236,.7)}
+.nav.onhero .brand .bt small{color:rgba(250,246,238,.88)}
+.nav.onhero .brand .bt,.nav.onhero .brand .bt small,
+.nav.onhero .nav-links a,.nav.onhero .nav-links button{text-shadow:0 1px 12px rgba(16,11,5,.75)}
 .nav.onhero .hamb{color:#f8f4ec}
 .nav.onhero .brand .bm{background:rgba(248,244,236,.16);color:#f8f4ec}
 .nav.onhero .nav-links a:hover,.nav.onhero .nav-links button:hover{color:#fff}
